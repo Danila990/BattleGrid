@@ -1,0 +1,131 @@
+using FractionsGame;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityScope;
+
+namespace BattleGridGame
+{
+    public class GridUnitInteractor : MonoBehaviour
+    {
+        [Inject] private GridMap _gridMap;
+        [Inject] private Mouse3D _mouse3D;
+
+        private Cell _currentCell;
+
+        private void Update()
+        {
+            if (!Input.GetMouseButtonDown(0)) return;
+
+            if (_gridMap.TryGetCell(_mouse3D.GetMouseClickPos(), out Cell clickedCell))
+            {
+                if (_currentCell == null)
+                {
+                    if (clickedCell.Unit != null)
+                    {
+                        _currentCell = clickedCell;
+                        ActivateViewCells();
+                    }
+                    return;
+                }
+                else
+                {
+                    DeactivateViewCells();
+                    if (clickedCell.Unit != null && clickedCell.Unit.Team != _currentCell.Unit.Team)
+                    {
+                        BattleUnit(clickedCell);
+                        if (_currentCell != null && clickedCell.Unit == null)
+                            MoveUnit(clickedCell);
+                    }
+                    else
+                        MoveUnit(clickedCell);
+
+                    _currentCell = null;
+                }
+            }
+        }
+
+        private void MoveUnit(Cell clickedCell)
+        {
+            foreach (var moveCell in GetMoveCells())
+                if(clickedCell.Equals(moveCell))
+                {
+                    _currentCell.Unit.Movement(clickedCell.transform.position);
+                    clickedCell.Unit = _currentCell.Unit;
+                    _currentCell.Unit = null;
+                    clickedCell.Team = clickedCell.Unit.Team;
+                    clickedCell.UpdateTeamColor();
+                    break;
+                }
+        }
+
+        private void BattleUnit(Cell clickedCell)
+        {
+            foreach (var attackCell in GetAttackCells())
+                if (clickedCell.Equals(attackCell))
+                {
+                    _currentCell.Unit.TakeDamage(clickedCell.Unit.Damage);
+                    clickedCell.Unit.TakeDamage(_currentCell.Unit.Damage);
+
+                    if (clickedCell.Unit.IsDead)
+                    {
+                        Destroy(clickedCell.Unit.gameObject);
+                        clickedCell.Unit = null;
+                    }
+
+                    if (_currentCell.Unit.IsDead)
+                    {
+                        Destroy(_currentCell.Unit.gameObject);
+                        _currentCell.Unit = null;
+                        _currentCell = null;
+                    }
+
+                    break;
+                }
+        }
+
+        private void ActivateViewCells()
+        {
+            _currentCell.ChangeColor(CellViewType.Select);
+
+            foreach (var moveCells in GetMoveCells())
+                moveCells.ChangeColor(CellViewType.Move);
+
+            foreach (var attacCells in GetAttackCells())
+                attacCells.ChangeColor(CellViewType.Attack);
+        }
+
+        private void DeactivateViewCells()
+        {
+            _currentCell.ChangeColor(CellViewType.Standart);
+
+            foreach (var moveCells in GetMoveCells())
+                moveCells.ChangeColor(CellViewType.Standart);
+
+            foreach (var attacCells in GetAttackCells())
+                attacCells.ChangeColor(CellViewType.Standart);
+        }
+
+        private Cell[] GetMoveCells()
+        {
+            _gridMap.GetCellAndNear(_currentCell.X, _currentCell.Z, out Cell[] moveCells, _currentCell.Unit.MoveRange);
+            List<Cell> cells = new List<Cell>();
+            foreach(Cell cell in moveCells)
+                if(cell.Unit == null)
+                    cells.Add(cell);
+
+            return cells.ToArray();
+        }
+
+        private Cell[] GetAttackCells()
+        {
+            _gridMap.GetCellAndNear(_currentCell.X, _currentCell.Z, out Cell[] moveCells, _currentCell.Unit.AttackRange);
+            List<Cell> cells = new List<Cell>();
+            foreach (Cell cell in moveCells)
+                if (cell.Unit != null)
+                    if(cell.Unit.Team != _currentCell.Unit.Team)
+                        cells.Add(cell);
+
+            return cells.ToArray();
+        }
+    }
+}
