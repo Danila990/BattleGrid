@@ -593,53 +593,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!1 &438426473
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 438426475}
-  - component: {fileID: 438426474}
-  m_Layer: 0
-  m_Name: Mouse3D
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &438426474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 438426473}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b95fdbdad9b3fc4f878dacfc886770e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FractionsGame.Mouse3D
-  _rayLayermask:
-    serializedVersion: 2
-    m_Bits: 64
---- !u!4 &438426475
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 438426473}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &639222198
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,11 +869,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15868d0415d9946439a0ca19804d755a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnityScope.GameScope
-  _isAutoBuild: 1
   _gridMap: {fileID: 1006987965}
   _gridGenerator: {fileID: 1006987962}
   _unitCreator: {fileID: 1006987966}
-  _mouse3D: {fileID: 438426474}
+  _mouse3DPrefab: {fileID: 5803927456291540792, guid: 7c17e2579b2c0784d9285392f87f41b4, type: 3}
 --- !u!1 &1043503336
 GameObject:
   m_ObjectHideFlags: 0
@@ -1039,6 +991,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CountStepView
   _text: {fileID: 1983834806}
+--- !u!1 &1806756519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1806756521}
+  - component: {fileID: 1806756520}
+  m_Layer: 0
+  m_Name: GameScope (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1806756520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806756519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15868d0415d9946439a0ca19804d755a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ServiceLocator.GameScope
+  _gridMap: {fileID: 0}
+  _gridGenerator: {fileID: 0}
+  _unitCreator: {fileID: 0}
+  _mouse3DPrefab: {fileID: 0}
+--- !u!4 &1806756521
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806756519}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.40976, y: -0, z: 2.40976}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1983834804
 GameObject:
   m_ObjectHideFlags: 0
@@ -1181,6 +1181,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 756279208}
-  - {fileID: 438426475}
   - {fileID: 1006987963}
   - {fileID: 1043503340}
+  - {fileID: 1806756521}

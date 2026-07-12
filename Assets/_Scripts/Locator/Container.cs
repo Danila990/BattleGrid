@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnityScope
+namespace ServiceLocator
 {
     public interface IContainer : IContainerGeter, IContainerSeter
     {
+        public IEnumerable<object> Services { get; }
+        public void Clear();
     }
 
     public interface IContainerGeter
     {
-        public IEnumerable<object> Services { get; }
-        public IContainerGeter Get<T>(out T service) where T : class;
         public T Get<T>(Type type) where T : class;
         public T Get<T>() where T : class;
     }
@@ -22,16 +22,15 @@ namespace UnityScope
         public IContainerSeter Set<T>(T service, Type type) where T : class;
     }
 
-    public class ServiceContainer : IContainer
+    public class Container : IContainer
     {
         private readonly Dictionary<Type, object> _services = new Dictionary<Type, object>();
 
         public IEnumerable<object> Services => _services.Values;
 
-        public IContainerGeter Get<T>(out T service) where T : class
+        public void Clear()
         {
-            service = Get<T>();
-            return this;
+            _services.Clear();
         }
 
         public T Get<T>(Type type) where T : class
@@ -39,7 +38,7 @@ namespace UnityScope
             if (_services.TryGetValue(type, out object obj))
                 return obj as T;
 
-            Debug.LogError($"ServiceContainer get of type {type.FullName} - not registered");
+            Debug.LogError($"Container get of type {type.FullName} - not registered");
             return null;
         }
 
@@ -57,7 +56,7 @@ namespace UnityScope
         public IContainerSeter Set<T>(T service, Type type) where T : class
         {
             if (!_services.TryAdd(type, service))
-                Debug.LogError($"ServiceContainer set of type {type.FullName} - already registered");
+                Debug.LogError($"Container set of type {type.FullName} - already registered");
 
             return this;
         }

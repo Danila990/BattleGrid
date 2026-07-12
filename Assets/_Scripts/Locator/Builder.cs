@@ -1,7 +1,7 @@
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace UnityScope
+namespace ServiceLocator
 {
     public interface IBuilder
     {
@@ -13,11 +13,11 @@ namespace UnityScope
         public void RegisterNewClass<T>() where T : class, new();
     }
 
-    public class ServiceBuilder : IBuilder
+    public class Builder : IBuilder
     {
         private IContainerSeter _register;
 
-        public ServiceBuilder(IContainerSeter register)
+        public Builder(IContainerSeter register)
         {
             _register = register;
         }

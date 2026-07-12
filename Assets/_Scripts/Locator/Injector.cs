@@ -4,7 +4,7 @@ using System.Reflection;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace UnityScope
+namespace ServiceLocator
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method | AttributeTargets.Property)]
     public sealed class InjectAttribute : PropertyAttribute { }
@@ -17,16 +17,9 @@ namespace UnityScope
         public IInjector InjectMono(MonoBehaviour obj);
     }
 
-    public class ServiceInjector : IInjector
+    public class Injector : IInjector
     {
         private const BindingFlags BINDING_FLAGS = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy;
-
-        private readonly IContainerGeter _container;
-
-        public ServiceInjector(IContainerGeter resolver)
-        {
-            _container = resolver;
-        }
 
         public void InjectAllMonoBehaviour()
         {
@@ -86,12 +79,12 @@ namespace UnityScope
             {
                 if (injectableField.GetValue(instance) != null)
                 {
-                    Debug.LogWarning($"[ServiceInjector] Field '{injectableField.Name}' of class '{type.Name}' is already set.");
+                    Debug.LogWarning($"[Injector] Field '{injectableField.Name}' of class '{type.Name}' is already set.");
                     continue;
                 }
 
                 var fieldType = injectableField.FieldType;
-                var resolvedInstance = _container.Get<object>(fieldType);
+                var resolvedInstance = Locator.Get<object>(fieldType);
                 if (resolvedInstance == null)
                     throw new Exception($"Failed to inject into field '{injectableField.Name}' of class '{type.Name}'.");
 
@@ -109,7 +102,7 @@ namespace UnityScope
                 var requiredParameters = injectableMethod.GetParameters()
                     .Select(parameter => parameter.ParameterType)
                     .ToArray();
-                var resolvedInstances = requiredParameters.Select(_container.Get<object>).ToArray();
+                var resolvedInstances = requiredParameters.Select(Locator.Get<object>).ToArray();
                 if (resolvedInstances.Any(resolvedInstance => resolvedInstance == null))
                     throw new Exception($"Failed to inject into method '{injectableMethod.Name}' of class '{type.Name}'.");
 
@@ -125,7 +118,7 @@ namespace UnityScope
             foreach (var injectableProperty in injectableProperties)
             {
                 var propertyType = injectableProperty.PropertyType;
-                var resolvedInstance = _container.Get<object>(propertyType);
+                var resolvedInstance = Locator.Get<object>(propertyType);
                 if (resolvedInstance == null)
                     throw new Exception($"Failed to inject into property '{injectableProperty.Name}' of class '{type.Name}'.");
 
