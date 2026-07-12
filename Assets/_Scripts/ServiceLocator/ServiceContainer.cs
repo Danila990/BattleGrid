@@ -22,7 +22,7 @@ namespace UnityScope
         public IContainerSeter Set<T>(T service, Type type) where T : class;
     }
 
-    public class Container : IContainer
+    public class ServiceContainer : IContainer
     {
         private readonly Dictionary<Type, object> _services = new Dictionary<Type, object>();
 
@@ -39,7 +39,7 @@ namespace UnityScope
             if (_services.TryGetValue(type, out object obj))
                 return obj as T;
 
-            Debug.LogError($"Container get of type {type.FullName} - not registered");
+            Debug.LogError($"ServiceContainer get of type {type.FullName} - not registered");
             return null;
         }
 
@@ -57,7 +57,7 @@ namespace UnityScope
         public IContainerSeter Set<T>(T service, Type type) where T : class
         {
             if (!_services.TryAdd(type, service))
-                Debug.LogError($"Container set of type {type.FullName} - already registered");
+                Debug.LogError($"ServiceContainer set of type {type.FullName} - already registered");
 
             return this;
         }

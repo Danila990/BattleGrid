@@ -13,11 +13,11 @@ namespace UnityScope
         public void RegisterNewClass<T>() where T : class, new();
     }
 
-    public class Builder : IBuilder
+    public class ServiceBuilder : IBuilder
     {
         private IContainerSeter _register;
 
-        public Builder(IContainerSeter register)
+        public ServiceBuilder(IContainerSeter register)
         {
             _register = register;
         }

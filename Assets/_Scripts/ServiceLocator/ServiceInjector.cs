@@ -17,13 +17,13 @@ namespace UnityScope
         public IInjector InjectMono(MonoBehaviour obj);
     }
 
-    public class Injector : IInjector
+    public class ServiceInjector : IInjector
     {
         private const BindingFlags BINDING_FLAGS = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy;
 
         private readonly IContainerGeter _container;
 
-        public Injector(IContainerGeter resolver)
+        public ServiceInjector(IContainerGeter resolver)
         {
             _container = resolver;
         }
@@ -86,7 +86,7 @@ namespace UnityScope
             {
                 if (injectableField.GetValue(instance) != null)
                 {
-                    Debug.LogWarning($"[Injector] Field '{injectableField.Name}' of class '{type.Name}' is already set.");
+                    Debug.LogWarning($"[ServiceInjector] Field '{injectableField.Name}' of class '{type.Name}' is already set.");
                     continue;
                 }
 

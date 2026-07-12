@@ -14,30 +14,23 @@ namespace UnityScope
         private static IInjector _injector;
         private static IContainer _container;
 
-        private void Awake()
-        {
-            if (_isAutoBuild)
-            {
-                PostAwake();
-                Build();
-                LateAwake();
-            }
-        }
-
-        protected virtual void LateAwake() { }
-
-        protected virtual void PostAwake() { }
-
         public void Build()
         {
             if (_isBuilded) return;
 
             _isBuilded = true;
-            _container = new Container();
-            _builder = new Builder(_container);
-            _injector = new Injector(_container);
+            _container = new ServiceContainer();
+            _builder = new ServiceBuilder(_container);
+            _injector = new ServiceInjector(_container);
             Configurate(_builder);
             InjectContainer();
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void AutoBuild()
+        {
+            if (_isAutoBuild)
+                Build();
         }
 
         private void InjectContainer()
@@ -54,9 +47,9 @@ namespace UnityScope
         public static T Get<T>(Type type) where T : class => Get<T>(type);
         public static T Get<T>() where T : class => Get<T>();
 
-        public IInjector Inject(object obj) => _injector.Inject(obj);
-        public IInjector InjectMono(object obj) => _injector.InjectMono(obj);
-        public IInjector InjectMono(MonoBehaviour obj) => _injector.InjectMono(obj);
+        public static IInjector Inject(object obj) => _injector.Inject(obj);
+        public static IInjector InjectMono(object obj) => _injector.InjectMono(obj);
+        public static IInjector InjectMono(MonoBehaviour obj) => _injector.InjectMono(obj);
 
 
         private void OnDestroy()

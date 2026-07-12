@@ -17,12 +17,7 @@ namespace UnityScope
             builder.Register(_mouse3D);
         }
 
-        protected override void LateAwake()
-        {
-
-        }
-
-        protected override void PostAwake()
+        private void Awake()
         {
             _gridGenerator.GenerateGrid();
             _unitCreator.CreateUnit(_gridMap);
