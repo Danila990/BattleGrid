@@ -2,8 +2,10 @@ using UnityEngine;
 
 namespace ServiceLocator
 {
-    public abstract class Scope : MonoBehaviour
+    public class Scope : MonoBehaviour
     {
+        [SerializeField] private ScopeInstaller[] _installers;
+
         private bool _isBuilded = false;
 
         public void SetupScope(IBuilder builder)
@@ -11,9 +13,15 @@ namespace ServiceLocator
             if(_isBuilded) return;
 
             _isBuilded = true;
-            Configurate(builder);
-        }
+            if (_installers == null) return;
 
-        protected abstract void Configurate(IBuilder builder);
+            foreach (var installer in _installers)
+                installer.Install(builder);
+        }
+    }
+
+    public abstract class ScopeInstaller : MonoBehaviour
+    {
+         public abstract void Install(IBuilder builder);
     }
 }
