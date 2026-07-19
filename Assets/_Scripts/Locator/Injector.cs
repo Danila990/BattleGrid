@@ -4,7 +4,7 @@ using System.Reflection;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace ServiceLocator
+namespace UnityServiceLocator
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method | AttributeTargets.Property)]
     public sealed class InjectAttribute : PropertyAttribute { }
@@ -84,7 +84,7 @@ namespace ServiceLocator
                 }
 
                 var fieldType = injectableField.FieldType;
-                var resolvedInstance = Locator.Get<object>(fieldType);
+                var resolvedInstance = ServiceLocator.Get<object>(fieldType);
                 if (resolvedInstance == null)
                     throw new Exception($"Failed to inject into field '{injectableField.Name}' of class '{type.Name}'.");
 
@@ -102,7 +102,7 @@ namespace ServiceLocator
                 var requiredParameters = injectableMethod.GetParameters()
                     .Select(parameter => parameter.ParameterType)
                     .ToArray();
-                var resolvedInstances = requiredParameters.Select(Locator.Get<object>).ToArray();
+                var resolvedInstances = requiredParameters.Select(ServiceLocator.Get<object>).ToArray();
                 if (resolvedInstances.Any(resolvedInstance => resolvedInstance == null))
                     throw new Exception($"Failed to inject into method '{injectableMethod.Name}' of class '{type.Name}'.");
 
@@ -118,7 +118,7 @@ namespace ServiceLocator
             foreach (var injectableProperty in injectableProperties)
             {
                 var propertyType = injectableProperty.PropertyType;
-                var resolvedInstance = Locator.Get<object>(propertyType);
+                var resolvedInstance = ServiceLocator.Get<object>(propertyType);
                 if (resolvedInstance == null)
                     throw new Exception($"Failed to inject into property '{injectableProperty.Name}' of class '{type.Name}'.");
 

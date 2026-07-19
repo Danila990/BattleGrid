@@ -1,7 +1,7 @@
 using BattleGridGame;
 using UnityEngine;
 
-namespace ServiceLocator
+namespace UnityServiceLocator
 {
     public class GameInstaller : ScopeInstaller
     {

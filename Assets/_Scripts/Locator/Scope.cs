@@ -1,14 +1,20 @@
 using UnityEngine;
 
-namespace ServiceLocator
+namespace UnityServiceLocator
 {
+    [DefaultExecutionOrder(-999)]
     public class Scope : MonoBehaviour
     {
         [SerializeField] private ScopeInstaller[] _installers;
 
         private bool _isBuilded = false;
 
-        public void SetupScope(IBuilder builder)
+        private void Awake()
+        {
+            ServiceLocator.BuildScope(Configurate);
+        }
+
+        private void Configurate(IBuilder builder)
         {
             if(_isBuilded) return;
 
