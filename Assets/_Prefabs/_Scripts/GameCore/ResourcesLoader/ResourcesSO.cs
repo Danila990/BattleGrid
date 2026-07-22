@@ -26,16 +26,10 @@ namespace GameCore
             return _resources.First(_ => _.Name == name) as T;
         }
 
-#if UNITY_EDITOR
-
-        private const string PATH_TO_LOAD_RESOURCES = "";
-        private string[] NAME_FRUIT_LOAD = new string[2] { "t:prefab", "t:asset" };
-
         [Button("Load resources")]
         public void LoadResources()
         {
-            string[] guids = AssetDatabase.FindAssets(NAME_FRUIT_LOAD, new[] { PATH_TO_LOAD_RESOURCES });
+            
         }
-#endif
     }
 }
