@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnityServiceLocator
+namespace GameCore.UnityServiceLocator
 {
     public interface IContainer : IContainerGeter, IContainerSeter
     {

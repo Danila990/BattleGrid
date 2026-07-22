@@ -1,7 +1,7 @@
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace UnityServiceLocator
+namespace GameCore.UnityServiceLocator
 {
     public interface IBuilder
     {

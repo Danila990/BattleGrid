@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UnityServiceLocator
+namespace GameCore.UnityServiceLocator
 {
     [DefaultExecutionOrder(-999)]
     public class Scope : MonoBehaviour

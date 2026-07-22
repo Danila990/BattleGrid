@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnityServiceLocator
+namespace GameCore.UnityServiceLocator
 {
     public class ServiceLocator
     {
