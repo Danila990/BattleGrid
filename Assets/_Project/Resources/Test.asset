@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc6b2f5e30e61614cb1687d1fa5e776b, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: Assembly-CSharp::BattleGridGame.GameOptions
+  <EnemyUnit>k__BackingField: {fileID: 3556908332691940309, guid: 06abbc7b6a7dbfd458afe39fda983dba, type: 3}
+  <PlayerUnit>k__BackingField: {fileID: 6344319034585081816, guid: 73e5dccea4b30a04496d062cef00e08d, type: 3}
+  <SizeGrid>k__BackingField: {x: 5, y: 5}
+  <CellPrefab>k__BackingField: {fileID: 1661228698999874924, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+  <OffsetCell>k__BackingField: 1.2

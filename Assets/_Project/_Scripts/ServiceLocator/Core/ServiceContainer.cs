@@ -4,25 +4,25 @@ using UnityEngine;
 
 namespace GameCore.UnityServiceLocator
 {
-    public interface IContainer : IContainerGeter, IContainerSeter
+    public interface IServiceContainer : IServiceGeter, IServiceSeter
     {
         public IEnumerable<object> Services { get; }
         public void Clear();
     }
 
-    public interface IContainerGeter
+    public interface IServiceGeter
     {
         public T Get<T>(Type type) where T : class;
         public T Get<T>() where T : class;
     }
 
-    public interface IContainerSeter
+    public interface IServiceSeter
     {
-        public IContainerSeter Set<T>(T service) where T : class;
-        public IContainerSeter Set<T>(T service, Type type) where T : class;
+        public IServiceSeter Set<T>(T service) where T : class;
+        public IServiceSeter Set<T>(T service, Type type) where T : class;
     }
 
-    public class Container : IContainer
+    public class ServiceContainer : IServiceContainer
     {
         private readonly Dictionary<Type, object> _services = new Dictionary<Type, object>();
 
@@ -38,7 +38,7 @@ namespace GameCore.UnityServiceLocator
             if (_services.TryGetValue(type, out object obj))
                 return obj as T;
 
-            Debug.LogError($"Container get of type {type.FullName} - not registered");
+            Debug.LogError($"ServiceContainer get of type {type.FullName} - not registered");
             return null;
         }
 
@@ -47,16 +47,16 @@ namespace GameCore.UnityServiceLocator
             return Get<T>(typeof(T));
         }
 
-        public IContainerSeter Set<T>(T service) where T : class
+        public IServiceSeter Set<T>(T service) where T : class
         {
             Set<T>(service, typeof(T));
             return this;
         }
 
-        public IContainerSeter Set<T>(T service, Type type) where T : class
+        public IServiceSeter Set<T>(T service, Type type) where T : class
         {
             if (!_services.TryAdd(type, service))
-                Debug.LogError($"Container set of type {type.FullName} - already registered");
+                Debug.LogError($"ServiceContainer set of type {type.FullName} - already registered");
 
             return this;
         }

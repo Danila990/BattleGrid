@@ -3,12 +3,10 @@ using UnityEngine;
 namespace GameCore.UnityServiceLocator
 {
     [DefaultExecutionOrder(-999)]
-    public abstract class EntryPointScope : MonoBehaviour, IServiceContext
+    public abstract class SceneContext : ServiceContext
     {
         [SerializeField] private bool _isAutoBuild = true;
 
-        private bool _isBuilded = false;
-        
         private void Awake()
         {
             if (_isAutoBuild)
@@ -19,13 +17,11 @@ namespace GameCore.UnityServiceLocator
         {
             if (_isBuilded) return;
 
-            _isBuilded = true;
             ServiceLocator.BuildScope(this);
-
             BuildComplete();
         }
 
+        protected override abstract void Configurate(IServiceBuilder builder);
         protected virtual void BuildComplete() { }
-        public virtual void Configurate(IBuilder builder) { }
     }
 }

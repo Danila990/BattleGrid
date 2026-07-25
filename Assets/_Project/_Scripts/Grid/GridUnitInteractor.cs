@@ -14,7 +14,7 @@ namespace BattleGridGame
 
         private void Update()
         {
-            if (!Input.GetMouseButtonDown(0)) return;
+            if (!Input.GetMouseButtonDown(0) && _gridMap == null) return;
 
             if (_gridMap.TryGetCell(_mouse3D.GetMouseClickPos(), out Cell clickedCell))
             {

@@ -9,15 +9,15 @@ namespace GameCore.UnityServiceLocator
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method | AttributeTargets.Property)]
     public sealed class InjectAttribute : PropertyAttribute { }
 
-    public interface IInjector
+    public interface IServiceInjector
     {
         public void InjectAllMonoBehaviour();
-        public IInjector Inject(object obj);
-        public IInjector InjectMono(object obj);
-        public IInjector InjectMono(MonoBehaviour obj);
+        public IServiceInjector Inject(object obj);
+        public IServiceInjector InjectMono(object obj);
+        public IServiceInjector InjectMono(MonoBehaviour obj);
     }
 
-    public class Injector : IInjector
+    public class ServiceInjector : IServiceInjector
     {
         private const BindingFlags BINDING_FLAGS = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy;
 
@@ -40,7 +40,7 @@ namespace GameCore.UnityServiceLocator
             }
         }
 
-        public IInjector InjectMono(object obj)
+        public IServiceInjector InjectMono(object obj)
         {
             if (obj is MonoBehaviour monoBehaviour )
                 return InjectMono(monoBehaviour);
@@ -48,7 +48,8 @@ namespace GameCore.UnityServiceLocator
             Inject(obj);
             return this;
         }
-        public IInjector InjectMono(MonoBehaviour behavior)
+
+        public IServiceInjector InjectMono(MonoBehaviour behavior)
         {
             var behaviours = behavior.GetComponentsInChildren<MonoBehaviour>();
             foreach (var mono in behaviours)
@@ -57,7 +58,7 @@ namespace GameCore.UnityServiceLocator
             return this;
         }
 
-        public IInjector Inject(object obj)
+        public IServiceInjector Inject(object obj)
         {
             if (!IsInjectable(obj)) return this;
 
@@ -79,7 +80,7 @@ namespace GameCore.UnityServiceLocator
             {
                 if (injectableField.GetValue(instance) != null)
                 {
-                    Debug.LogWarning($"[Injector] Field '{injectableField.Name}' of class '{type.Name}' is already set.");
+                    Debug.LogWarning($"[ServiceInjector] Field '{injectableField.Name}' of class '{type.Name}' is already set.");
                     continue;
                 }
 

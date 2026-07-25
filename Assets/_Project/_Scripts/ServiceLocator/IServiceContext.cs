@@ -2,6 +2,6 @@ namespace GameCore.UnityServiceLocator
 {
     public interface IServiceContext
     {
-        public void Configurate(IBuilder builder);
+        public void BuildContext(IServiceBuilder builder);
     }
 }

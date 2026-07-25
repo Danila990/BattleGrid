@@ -1,3 +1,4 @@
+using GameCore.UnityServiceLocator;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,18 +6,19 @@ namespace BattleGridGame
 {
     public class GridMap : MonoBehaviour
     {
+        [Inject] private GameOptions _options;
+
         private Cell[,] _gridCells;
         private Vector3 _gridOffset;
-        private float _offsetCell;
 
+        public float OffsetCell => _options.OffsetCell;
         public int SizeX => _gridCells.GetLength(0);
         public int SizeZ => _gridCells.GetLength(1);
 
-        public void SetupMap(Cell[,] gridCells, Vector3 gridOffset, float offsetCell)
+        public void CreateGrid()
         {
-            _gridCells = gridCells;
-            _gridOffset = gridOffset;
-            _offsetCell = offsetCell;
+            _gridOffset = GridMiddleOffset() + transform.position;
+            _gridCells = CreateGrid(_gridOffset);
         }
 
         public Cell GetCellAndNear(Vector3 worldPos, out Cell[] near)
@@ -98,8 +100,40 @@ namespace BattleGridGame
 
         public void GetXZ(Vector3 worldPos, out int x, out int z)
         {
-            x = Mathf.FloorToInt((worldPos.x + _gridOffset.x) / _offsetCell + _offsetCell / 2);
-            z = Mathf.FloorToInt((worldPos.z + _gridOffset.z) / _offsetCell + _offsetCell / 2);
+            x = Mathf.FloorToInt((worldPos.x + _gridOffset.x) / OffsetCell + OffsetCell / 2);
+            z = Mathf.FloorToInt((worldPos.z + _gridOffset.z) / OffsetCell + OffsetCell / 2);
+        }
+
+        private Cell[,] CreateGrid(Vector3 _gridOffset)
+        {
+            var gridCells = new Cell[_options.SizeGrid.x, _options.SizeGrid.y];
+            for (int x = 0; x < _options.SizeGrid.x; x++)
+            {
+                for (int z = 0; z < _options.SizeGrid.y; z++)
+                {
+                    Cell instantiateCell = InstantiateCell(x, z);
+                    instantiateCell.transform.position = new Vector3(x * _options.OffsetCell, 0, z * _options.OffsetCell) - _gridOffset;
+                    gridCells[x, z] = instantiateCell;
+                }
+            }
+
+            return gridCells;
+        }
+        private Cell InstantiateCell(int x, int z)
+        {
+            Cell newCell = Instantiate(_options.CellPrefab);
+            newCell.name = $"X-{x}, Z-{z}";
+            newCell.X = x;
+            newCell.Z = z;
+            newCell.transform.parent = transform;
+            return newCell;
+        }
+
+        private Vector3 GridMiddleOffset()
+        {
+            float sizeX = _options.SizeGrid.x * _options.OffsetCell - _options.OffsetCell;
+            float sizeZ = _options.SizeGrid.y * _options.OffsetCell - _options.OffsetCell;
+            return new Vector3(sizeX, 0, sizeZ) / 2;
         }
     }
 }

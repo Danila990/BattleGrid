@@ -5,18 +5,18 @@ namespace GameCore.UnityServiceLocator
 {
     public class ServiceLocator
     {
-        private IContainer _sceneContainer;
-        private IContainer _globalContainer;
-        private IInjector _injector;
+        private IServiceContainer _sceneContainer;
+        private IServiceContainer _globalContainer;
+        private IServiceInjector _injector;
         private bool _isProjectBuild = false;
 
         private static ServiceLocator _instance = new ServiceLocator();
 
         public ServiceLocator()
         {
-            _sceneContainer = new Container();
-            _globalContainer = new Container();
-            _injector = new Injector();
+            _sceneContainer = new ServiceContainer();
+            _globalContainer = new ServiceContainer();
+            _injector = new ServiceInjector();
 
             BuildProject();
         }
@@ -39,9 +39,8 @@ namespace GameCore.UnityServiceLocator
         public static void BuildScope(IServiceContext configurateScope)
         {
             _instance._sceneContainer.Clear();
-
-            IBuilder builder = new Builder(_instance._sceneContainer);
-            configurateScope.Configurate(builder);
+            IServiceBuilder builder = new ServiceBuilder(_instance._sceneContainer);
+            configurateScope.BuildContext(builder);
 
             foreach (var service in _instance._sceneContainer.Services)
                 _instance._injector.InjectMono(service);
@@ -54,14 +53,15 @@ namespace GameCore.UnityServiceLocator
             if (_isProjectBuild) return;
 
             _isProjectBuild = true;
-            IBuilder builder = new Builder(_globalContainer);
-            IServiceContext scope = Resources.Load<IServiceContext>(nameof(EntryPointScope));
-            if (scope == null)
+            IServiceBuilder builder = new ServiceBuilder(_globalContainer);
+            IServiceContext context = Resources.Load<ProjectContext>(nameof(ProjectContext));
+            if (context == null)
             {
-                Debug.Log("Отсутствует Project Scope");
+                Debug.LogError($"Отсутствует в папке Resources {nameof(ProjectContext)}");
                 return;
             }
 
+            context.BuildContext(builder);
             foreach (var service in _globalContainer.Services)
                 _injector.InjectMono(service);
         }
