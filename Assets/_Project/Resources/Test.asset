@@ -17,3 +17,6 @@ MonoBehaviour:
   <SizeGrid>k__BackingField: {x: 5, y: 5}
   <CellPrefab>k__BackingField: {fileID: 1661228698999874924, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
   <OffsetCell>k__BackingField: 1.2
+  <GridLayermask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 64

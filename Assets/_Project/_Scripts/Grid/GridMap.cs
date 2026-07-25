@@ -41,6 +41,19 @@ namespace BattleGridGame
             return nearCells.ToArray();
         }*/
 
+        public bool TryGetMouseClickCell(out Cell cell)
+        {
+            Vector3 mousePosition = Input.mousePosition;
+            Camera camera = Camera.main;
+            mousePosition.z = camera.nearClipPlane;
+            Ray ray = camera.ScreenPointToRay(mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, 100, _options.GridLayermask))
+                return TryGetCell(hit.point, out cell);
+
+            cell = null;
+            return false;
+        }
+
         public Cell GetCellAndNear(int x, int z, out Cell[] near, int range = 1)
         {
             List<Cell> nearCells = new List<Cell>();
@@ -83,7 +96,7 @@ namespace BattleGridGame
         {
             if (!FitCell(x, z))
             {
-                Debug.LogError($"Нет такой Cell: X-{x}, Z-{z}");
+                Debug.LogError($"Cell not found: X-{x}, Z-{z}");
                 return null;
             }
 

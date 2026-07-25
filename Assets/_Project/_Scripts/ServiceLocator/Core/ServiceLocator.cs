@@ -57,7 +57,7 @@ namespace GameCore.UnityServiceLocator
             IServiceContext context = Resources.Load<ProjectContext>(nameof(ProjectContext));
             if (context == null)
             {
-                Debug.LogError($"Отсутствует в папке Resources {nameof(ProjectContext)}");
+                Debug.LogWarning($"{nameof(ProjectContext)} Отсутствует в папке Resources");
                 return;
             }
 

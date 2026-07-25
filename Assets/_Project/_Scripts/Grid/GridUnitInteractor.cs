@@ -8,15 +8,14 @@ namespace BattleGridGame
     public class GridUnitInteractor : MonoBehaviour
     {
         [Inject] private GridMap _gridMap;
-        [Inject] private Mouse3D _mouse3D;
 
         private Cell _currentCell;
 
         private void Update()
         {
-            if (!Input.GetMouseButtonDown(0) && _gridMap == null) return;
+            if (!Input.GetMouseButtonDown(0) || _gridMap == null) return;
 
-            if (_gridMap.TryGetCell(_mouse3D.GetMouseClickPos(), out Cell clickedCell))
+            if (_gridMap.TryGetMouseClickCell(out Cell clickedCell))
             {
                 if (_currentCell == null)
                 {
