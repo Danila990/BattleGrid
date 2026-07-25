@@ -36,12 +36,12 @@ namespace GameCore.UnityServiceLocator
         public static void InjectMono(object obj) => _instance._injector.InjectMono(obj);
         public static void InjectMono(MonoBehaviour obj) => _instance._injector.InjectMono(obj);
 
-        public static void BuildScope(Action<IBuilder> configurateScope)
+        public static void BuildScope(IServiceContext configurateScope)
         {
             _instance._sceneContainer.Clear();
 
             IBuilder builder = new Builder(_instance._sceneContainer);
-            configurateScope?.Invoke(builder);
+            configurateScope.Configurate(builder);
 
             foreach (var service in _instance._sceneContainer.Services)
                 _instance._injector.InjectMono(service);
@@ -55,7 +55,7 @@ namespace GameCore.UnityServiceLocator
 
             _isProjectBuild = true;
             IBuilder builder = new Builder(_globalContainer);
-            Scope scope = Resources.Load<Scope>(nameof(Scope));
+            IServiceContext scope = Resources.Load<IServiceContext>(nameof(EntryPointScope));
             if (scope == null)
             {
                 Debug.Log("Отсутствует Project Scope");
