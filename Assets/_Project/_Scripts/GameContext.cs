@@ -1,9 +1,10 @@
 using BattleGridGame;
+using System.Collections;
 using UnityEngine;
 
 namespace GameCore.UnityServiceLocator
 {
-    public class GameContext : SceneContext
+    public partial class GameContext : SceneContext
     {
         [SerializeField] private GameOptions _gameOptions;
 
@@ -23,6 +24,13 @@ namespace GameCore.UnityServiceLocator
         {
             _gridMap.CreateGrid();
             _unitCreator.CreateUnitTest();
+        }
+
+        protected override IEnumerator GameStart()
+        {
+            WaitForClick InputCell = new WaitForClick();
+            yield return InputCell;
+            Debug.Log(InputCell.Cell);
         }
     }
 }
