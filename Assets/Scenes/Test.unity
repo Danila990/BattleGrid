@@ -903,6 +903,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameCore.UnityServiceLocator.GameContext
   _isAutoBuild: 1
   _gameOptions: {fileID: 11400000, guid: 45bc76edc085b574a9842acec7f8c59e, type: 2}
+  _gridOptions: {fileID: 11400000, guid: 70eef57cec3b54543bcf4ef40636fd22, type: 2}
 --- !u!4 &1976277701
 Transform:
   m_ObjectHideFlags: 0

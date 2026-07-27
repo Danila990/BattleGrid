@@ -6,12 +6,11 @@ namespace BattleGridGame
 {
     public class GridMap : MonoBehaviour
     {
-        [Inject] private GameOptions _options;
+        [Inject] private GridOptions _options;
 
         private Cell[,] _gridCells;
         private Vector3 _gridOffset;
 
-        public float OffsetCell => _options.OffsetCell;
         public int SizeX => _gridCells.GetLength(0);
         public int SizeZ => _gridCells.GetLength(1);
 
@@ -113,8 +112,8 @@ namespace BattleGridGame
 
         public void GetXZ(Vector3 worldPos, out int x, out int z)
         {
-            x = Mathf.FloorToInt((worldPos.x + _gridOffset.x) / OffsetCell + OffsetCell / 2);
-            z = Mathf.FloorToInt((worldPos.z + _gridOffset.z) / OffsetCell + OffsetCell / 2);
+            x = Mathf.FloorToInt((worldPos.x + _gridOffset.x) / _options.OffsetCell + _options.OffsetCell / 2);
+            z = Mathf.FloorToInt((worldPos.z + _gridOffset.z) / _options.OffsetCell + _options.OffsetCell / 2);
         }
 
         private Cell[,] CreateGrid(Vector3 _gridOffset)

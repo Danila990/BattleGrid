@@ -15,6 +15,13 @@ namespace GameCore.UnityServiceLocator
                 BuildScope();
         }
 
+        private IEnumerator Start()
+        {
+            yield return GameStart();
+            yield return GameLoop();
+            yield return GameEnd();
+        }
+
         public void BuildScope()
         {
             if (_isBuilded) return;
@@ -25,5 +32,9 @@ namespace GameCore.UnityServiceLocator
 
         protected override abstract void Configurate(IServiceBuilder builder);
         protected virtual void BuildComplete() { }
+
+        protected virtual IEnumerator GameStart() { yield return null; }
+        protected virtual IEnumerator GameLoop() { yield return null; }
+        protected virtual IEnumerator GameEnd() { yield return null; }
     }
 }
