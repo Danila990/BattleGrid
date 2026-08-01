@@ -4,11 +4,12 @@ using UnityEngine;
 
 namespace BattleGridGame
 {
+
     public class GridMap : MonoBehaviour
     {
         [Inject] private GridOptions _options;
 
-        private Cell[,] _gridCells;
+        private GridCell[,] _gridCells;
         private Vector3 _gridOffset;
 
         public int SizeX => _gridCells.GetLength(0);
@@ -20,7 +21,7 @@ namespace BattleGridGame
             _gridCells = CreateGrid(_gridOffset);
         }
 
-        public Cell GetCellAndNear(Vector3 worldPos, out Cell[] near)
+        public GridCell GetCellAndNear(Vector3 worldPos, out GridCell[] near)
         {
             GetXZ(worldPos, out int x, out int z);
             return GetCellAndNear(x, z, out near);
@@ -40,7 +41,7 @@ namespace BattleGridGame
             return nearCells.ToArray();
         }*/
 
-        public bool TryGetMouseClickCell(out Cell cell)
+        public bool TryGetMouseClickCell(out GridCell cell)
         {
             Vector3 mousePosition = Input.mousePosition;
             Camera camera = Camera.main;
@@ -53,9 +54,9 @@ namespace BattleGridGame
             return false;
         }
 
-        public Cell GetCellAndNear(int x, int z, out Cell[] near, int range = 1)
+        public GridCell GetCellAndNear(int x, int z, out GridCell[] near, int range = 1)
         {
-            List<Cell> nearCells = new List<Cell>();
+            List<GridCell> nearCells = new List<GridCell>();
             int xMin = x - range;
             int xMax = x + range;
             int zMin = z - range;
@@ -66,32 +67,32 @@ namespace BattleGridGame
                     if (FitCell(i, j))
                         nearCells.Add(GetCell(i, j));
 
-            Cell centerCell = GetCell(x, z);
+            GridCell centerCell = GetCell(x, z);
             nearCells.Remove(centerCell);
             near = nearCells.ToArray();
             return centerCell;
         }
 
-        public bool TryGetCell(Vector3 worldPos, out Cell cell)
+        public bool TryGetCell(Vector3 worldPos, out GridCell cell)
         {
             GetXZ(worldPos, out int x, out int z);
             cell = GetCell(x, z);
             return cell != null;
         }
 
-        public Cell GetCell(Vector3 worldPos)
+        public GridCell GetCell(Vector3 worldPos)
         {
             GetXZ(worldPos, out int x, out int z);
             return GetCell(x, z);
         }
 
-        public Cell GetCell(Vector3 worldPos, out int x, out int z)
+        public GridCell GetCell(Vector3 worldPos, out int x, out int z)
         {
             GetXZ(worldPos, out x, out z);
             return GetCell(x, z);
         }
 
-        public Cell GetCell(int x, int z)
+        public GridCell GetCell(int x, int z)
         {
             if (!FitCell(x, z))
             {
@@ -116,14 +117,14 @@ namespace BattleGridGame
             z = Mathf.FloorToInt((worldPos.z + _gridOffset.z) / _options.OffsetCell + _options.OffsetCell / 2);
         }
 
-        private Cell[,] CreateGrid(Vector3 _gridOffset)
+        private GridCell[,] CreateGrid(Vector3 _gridOffset)
         {
-            var gridCells = new Cell[_options.SizeGrid.x, _options.SizeGrid.y];
+            var gridCells = new GridCell[_options.SizeGrid.x, _options.SizeGrid.y];
             for (int x = 0; x < _options.SizeGrid.x; x++)
             {
                 for (int z = 0; z < _options.SizeGrid.y; z++)
                 {
-                    Cell instantiateCell = InstantiateCell(x, z);
+                    GridCell instantiateCell = InstantiateCell(x, z);
                     instantiateCell.transform.position = new Vector3(x * _options.OffsetCell, 0, z * _options.OffsetCell) - _gridOffset;
                     gridCells[x, z] = instantiateCell;
                 }
@@ -131,9 +132,9 @@ namespace BattleGridGame
 
             return gridCells;
         }
-        private Cell InstantiateCell(int x, int z)
+        private GridCell InstantiateCell(int x, int z)
         {
-            Cell newCell = Instantiate(_options.CellPrefab);
+            GridCell newCell = Instantiate(_options.CellPrefab);
             newCell.name = $"X-{x}, Z-{z}";
             newCell.X = x;
             newCell.Z = z;

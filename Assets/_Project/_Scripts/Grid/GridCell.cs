@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleGridGame
 {
-    public class Cell : MonoBehaviour
+    public class GridCell : MonoBehaviour
     {
         [SerializeField] private MeshRenderer _renderer;
 

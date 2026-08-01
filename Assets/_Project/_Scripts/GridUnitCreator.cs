@@ -17,7 +17,7 @@ namespace BattleGridGame
             CreateUnit(_gridMap.GetCell(3, 3), _options.EnemyUnit);
         }
 
-        private Unit CreateUnit(Cell cell, Unit prefab)
+        private Unit CreateUnit(GridCell cell, Unit prefab)
         {
             cell.Team = prefab.Team;
             cell.UpdateTeamColor();
