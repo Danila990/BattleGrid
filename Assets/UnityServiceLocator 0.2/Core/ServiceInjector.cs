@@ -4,18 +4,10 @@ using System.Reflection;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace GameCore.UnityServiceLocator
+namespace UnityServiceLocator
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method | AttributeTargets.Property)]
     public sealed class InjectAttribute : PropertyAttribute { }
-
-    public interface IServiceInjector
-    {
-        public void InjectAllMonoBehaviour();
-        public IServiceInjector Inject(object obj);
-        public IServiceInjector InjectMono(object obj);
-        public IServiceInjector InjectMono(MonoBehaviour obj);
-    }
 
     public class ServiceInjector : IServiceInjector
     {

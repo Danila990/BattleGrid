@@ -1,7 +1,7 @@
 using FractionsGame;
 using System.Collections.Generic;
 using UnityEngine;
-using GameCore.UnityServiceLocator;
+using UnityServiceLocator;
 
 namespace BattleGridGame
 {

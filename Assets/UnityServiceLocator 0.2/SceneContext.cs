@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace GameCore.UnityServiceLocator
+namespace UnityServiceLocator
 {
     [DefaultExecutionOrder(-999)]
     public abstract class SceneContext : ServiceContext
@@ -30,7 +30,7 @@ namespace GameCore.UnityServiceLocator
             BuildComplete();
         }
 
-        protected override abstract void Configurate(IServiceBuilder builder);
+        protected override abstract void Configurate(IServiceRegister builder);
         protected virtual void BuildComplete() { }
 
         protected virtual IEnumerator GameStart() { yield return null; }

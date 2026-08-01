@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace GameCore.UnityServiceLocator
+namespace UnityServiceLocator
 {
     public class ServiceLocator
     {
@@ -39,7 +39,7 @@ namespace GameCore.UnityServiceLocator
         public static void BuildScope(IServiceContext configurateScope)
         {
             _instance._sceneContainer.Clear();
-            IServiceBuilder builder = new ServiceBuilder(_instance._sceneContainer);
+            IServiceRegister builder = new ServiceRegister(_instance._sceneContainer);
             configurateScope.BuildContext(builder);
 
             foreach (var service in _instance._sceneContainer.Services)
@@ -53,7 +53,7 @@ namespace GameCore.UnityServiceLocator
             if (_isProjectBuild) return;
 
             _isProjectBuild = true;
-            IServiceBuilder builder = new ServiceBuilder(_globalContainer);
+            IServiceRegister builder = new ProjectServiceRegister(_globalContainer);
             IServiceContext context = Resources.Load<ProjectContext>(nameof(ProjectContext));
             if (context == null)
             {

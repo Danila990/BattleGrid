@@ -1,4 +1,4 @@
-using GameCore.UnityServiceLocator;
+using UnityServiceLocator;
 using UnityEngine;
 
 namespace BattleGridGame

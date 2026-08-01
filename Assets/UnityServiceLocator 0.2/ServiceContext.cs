@@ -1,12 +1,12 @@
 using UnityEngine;
 
-namespace GameCore.UnityServiceLocator
+namespace UnityServiceLocator
 {
     public abstract class ServiceContext : MonoBehaviour, IServiceContext
     {
         protected bool _isBuilded = false;
 
-        public void BuildContext(IServiceBuilder builder)
+        public void BuildContext(IServiceRegister builder)
         {
             if (_isBuilded) return;
 
@@ -14,6 +14,6 @@ namespace GameCore.UnityServiceLocator
             Configurate(builder);
         }
 
-        protected abstract void Configurate(IServiceBuilder builder);
+        protected abstract void Configurate(IServiceRegister builder);
     }
 }

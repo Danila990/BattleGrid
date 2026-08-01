@@ -1,10 +1,10 @@
-using GameCore.UnityServiceLocator;
+using UnityServiceLocator;
 using System.Collections;
 using UnityEngine;
 
 namespace BattleGridGame
 {
-    public partial class GameContext : SceneContext
+    public class GameContext : SceneContext
     {
         [SerializeField] private GameOptions _gameOptions;
         [SerializeField] private GridOptions _gridOptions;
@@ -12,15 +12,15 @@ namespace BattleGridGame
         private GridMap _gridMap;
         private GridUnitCreator _unitCreator;
 
-        protected override void Configurate(IServiceBuilder builder)
+        protected override void Configurate(IServiceRegister register)
         {
-            builder.RegisterInstantiate(_gameOptions);
+            register.RegisterInstantiate(_gameOptions);
 
             //grid
-            builder.RegisterInstantiate(_gridOptions);
-            _gridMap = builder.RegisteNewGameobject<GridMap>();
-            _unitCreator = builder.RegisteNewGameobject<GridUnitCreator>();
-            builder.RegisteNewGameobject<GridUnitInteractor>();
+            register.RegisterInstantiate(_gridOptions);
+            _gridMap = register.RegisteNewGameobject<GridMap>();
+            _unitCreator = register.RegisteNewGameobject<GridUnitCreator>();
+            register.RegisteNewGameobject<GridUnitInteractor>();
         }
 
         protected override void BuildComplete()
