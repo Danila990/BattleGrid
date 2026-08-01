@@ -9,17 +9,12 @@ namespace UnityServiceLocator
     {
         [SerializeField] private bool _isAutoBuild = true;
 
+        private IRoot _root;
+
         private void Awake()
         {
             if (_isAutoBuild)
                 BuildScope();
-        }
-
-        private IEnumerator Start()
-        {
-            yield return GameStart();
-            yield return GameLoop();
-            yield return GameEnd();
         }
 
         public void BuildScope()
@@ -27,14 +22,18 @@ namespace UnityServiceLocator
             if (_isBuilded) return;
 
             ServiceLocator.BuildScope(this);
-            BuildComplete();
+            if(_root != null)
+            {
+                ServiceLocator.Inject(_root);
+                _root.GameInit();
+            }
         }
 
         protected override abstract void Configurate(IServiceRegister builder);
-        protected virtual void BuildComplete() { }
 
-        protected virtual IEnumerator GameStart() { yield return null; }
-        protected virtual IEnumerator GameLoop() { yield return null; }
-        protected virtual IEnumerator GameEnd() { yield return null; }
+        public void RegisterRoot<TRoot>() where TRoot : MonoBehaviour, IRoot
+        {
+            _root = new GameObject(nameof(TRoot)).AddComponent<TRoot>();
+        }
     }
 }
