@@ -1,16 +1,22 @@
-using FractionsGame;
 using UnityEngine;
 
 namespace BattleGridGame
 {
-    public class GridCell : MonoBehaviour
+    public class GridCell : MonoBehaviour, ICell
     {
         [SerializeField] private MeshRenderer _renderer;
 
         public int X { get; set; }
         public int Z { get; set; }
-        public Unit Unit { get; set; }
         public TeamType Team { get; set; } = TeamType.None;
+        public virtual CellType CellType => CellType.Base;
+        public virtual Vector3 MovePos => transform.position;
+        public virtual bool IsLocked => false;
+
+        public void ResetView()
+        {
+            _renderer.material.color = Color.white;
+        }
 
         public void ChangeColor(CellViewType viewType)
         {
@@ -23,18 +29,12 @@ namespace BattleGridGame
                 _ => Color.white
             };
 
-            _renderer.material.color = setColor;
+            ChangeColor(setColor);
         }
 
         public void UpdateTeamColor()
         {
-            _renderer.material.color = Team switch
-            {
-                TeamType.None => Color.white,
-                TeamType.Player => Color.skyBlue,
-                TeamType.AI_1 => Color.softRed,
-                _ => Color.white
-            };
+            ChangeColor(GetStandartColor());
         }
 
         private Color GetStandartColor()
@@ -47,6 +47,11 @@ namespace BattleGridGame
                 _ => Color.white
             };
         }
-    }
 
+        private void ChangeColor(Color color)
+        {
+            if(_renderer != null)
+                _renderer.material.color = color;
+        }
+    }
 }

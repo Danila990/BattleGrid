@@ -1,5 +1,4 @@
 using UnityServiceLocator;
-using System.Collections;
 using UnityEngine;
 
 namespace BattleGridGame
@@ -7,7 +6,7 @@ namespace BattleGridGame
     public class GameContext : SceneContext
     {
         [SerializeField] private GameOptions _gameOptions;
-        [SerializeField] private GridOptions _gridOptions;
+        [SerializeField] private GridMap _mapPrefab;
 
         protected override void Configurate(IServiceRegister register)
         {
@@ -16,8 +15,7 @@ namespace BattleGridGame
             register.RegisterInstantiate(_gameOptions);
 
             //grid
-            register.RegisterInstantiate(_gridOptions);
-            register.RegisteNewGameobject<GridMap>();
+            register.RegisterInstantiate<GridMap, IGridMap>(_mapPrefab);
             register.RegisteNewGameobject<GridUnitCreator>();
             register.RegisteNewGameobject<GridUnitInteractor>();
         }

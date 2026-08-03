@@ -5,7 +5,7 @@ namespace BattleGridGame
 {
     public class GridUnitCreator : MonoBehaviour
     {
-        [Inject] private GridMap _gridMap;
+        /*[Inject] private GridMap _gridMap;
         [Inject] private GameOptions _options;
 
         public void CreateUnitTest()
@@ -17,12 +17,12 @@ namespace BattleGridGame
             CreateUnit(_gridMap.GetCell(3, 3), _options.EnemyUnit);
         }
 
-        private Unit CreateUnit(GridCell cell, Unit prefab)
+        private Unit CreateUnit(CellView cell, Unit prefab)
         {
             cell.Team = prefab.Team;
             cell.UpdateTeamColor();
             cell.Unit = Instantiate(prefab, cell.transform.position, Quaternion.identity);
             return cell.Unit;
-        }
+        }*/
     }
 }

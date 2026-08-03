@@ -1,4 +1,3 @@
-using FractionsGame;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityServiceLocator;
@@ -7,15 +6,15 @@ namespace BattleGridGame
 {
     public class GridUnitInteractor : MonoBehaviour
     {
-        [Inject] private GridMap _gridMap;
+        /*[Inject] private IGridMap _gridMap;
 
-        private GridCell _currentCell;
+        private CellView _currentCell;
 
         private void Update()
         {
             if (!Input.GetMouseButtonDown(0) || _gridMap == null) return;
 
-            if (_gridMap.TryGetMouseClickCell(out GridCell clickedCell))
+            if (_gridMap.TryGetMouseClickCell(out CellView clickedCell))
             {
                 if (_currentCell == null)
                 {
@@ -43,7 +42,7 @@ namespace BattleGridGame
             }
         }
 
-        private void MoveUnit(GridCell clickedCell)
+        private void MoveUnit(CellView clickedCell)
         {
             foreach (var moveCell in GetMoveCells())
                 if(clickedCell.Equals(moveCell))
@@ -57,7 +56,7 @@ namespace BattleGridGame
                 }
         }
 
-        private void BattleUnit(GridCell clickedCell)
+        private void BattleUnit(CellView clickedCell)
         {
             foreach (var attackCell in GetAttackCells())
                 if (clickedCell.Equals(attackCell))
@@ -104,27 +103,27 @@ namespace BattleGridGame
                 attacCells.ChangeColor(CellViewType.Standart);
         }
 
-        private GridCell[] GetMoveCells()
+        private CellView[] GetMoveCells()
         {
-            _gridMap.GetCellAndNear(_currentCell.X, _currentCell.Z, out GridCell[] moveCells, _currentCell.Unit.MoveRange);
-            List<GridCell> cells = new List<GridCell>();
-            foreach(GridCell cell in moveCells)
+            _gridMap.GetCellAndNear(_currentCell.X, _currentCell.Z, out CellView[] moveCells, _currentCell.Unit.MoveRange);
+            List<CellView> cells = new List<CellView>();
+            foreach(CellView cell in moveCells)
                 if(cell.Unit == null)
                     cells.Add(cell);
 
             return cells.ToArray();
         }
 
-        private GridCell[] GetAttackCells()
+        private CellView[] GetAttackCells()
         {
-            _gridMap.GetCellAndNear(_currentCell.X, _currentCell.Z, out GridCell[] moveCells, _currentCell.Unit.AttackRange);
-            List<GridCell> cells = new List<GridCell>();
-            foreach (GridCell cell in moveCells)
+            _gridMap.GetCellAndNear(_currentCell.X, _currentCell.Z, out CellView[] moveCells, _currentCell.Unit.AttackRange);
+            List<CellView> cells = new List<CellView>();
+            foreach (CellView cell in moveCells)
                 if (cell.Unit != null)
                     if(cell.Unit.Team != _currentCell.Unit.Team)
                         cells.Add(cell);
 
             return cells.ToArray();
-        }
+        }*/
     }
 }

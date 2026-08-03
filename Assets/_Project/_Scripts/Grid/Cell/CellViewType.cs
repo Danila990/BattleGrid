@@ -1,4 +1,4 @@
-namespace FractionsGame
+namespace BattleGridGame
 {
     public enum CellViewType
     {
