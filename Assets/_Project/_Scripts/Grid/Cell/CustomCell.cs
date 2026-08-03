@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BattleGridGame
 {
-    public class CustomGridCell : GridCell
+    public class CustomCell : Cell
     {
         [SerializeField] private CellType _cellType;
         [SerializeField] private bool _isLoked = false;

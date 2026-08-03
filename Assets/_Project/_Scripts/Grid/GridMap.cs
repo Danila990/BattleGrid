@@ -6,13 +6,13 @@ namespace BattleGridGame
 {
     public class GridMap : MonoBehaviour, IGridMap
     {
-        [SerializeField] private MultiArray<GridCell> _array = new MultiArray<GridCell>();
+        [SerializeField] private MultiArray<Cell> _array = new MultiArray<Cell>();
         [SerializeField] private Vector3 _gridOffset;
         [SerializeField] private float _offsetCell = 1.2f;
 
-        public ArrayLine<GridCell>[] GetCells() => _array.GetAll();
+        public ArrayLine<Cell>[] GetCells() => _array.GetAll();
 
-        public void SetupMap(ArrayLine<GridCell>[] values, Vector3 gridOffset)
+        public void SetupMap(ArrayLine<Cell>[] values, Vector3 gridOffset)
         {
             _gridOffset = gridOffset;
             _array.Set(values);
@@ -101,7 +101,7 @@ namespace BattleGridGame
             z = Mathf.FloorToInt((worldPos.z + _gridOffset.z) / _offsetCell + _offsetCell / 2);
         }
 
-        public T FindFirstCell<T>(CellType cellType) where T : GridCell
+        public T FindFirstCell<T>(CellType cellType) where T : Cell
         {
             return _array.GetAll()
                 .SelectMany(line => line.Values)
@@ -110,7 +110,7 @@ namespace BattleGridGame
                 .FirstOrDefault();
         }
 
-        public T[] FindAllCells<T>(CellType cellType) where T : GridCell
+        public T[] FindAllCells<T>(CellType cellType) where T : Cell
         {
             return _array.GetAll()
                 .SelectMany(line => line.Values)

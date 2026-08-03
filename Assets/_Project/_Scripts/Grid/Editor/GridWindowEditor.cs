@@ -167,7 +167,7 @@ namespace BattleGridGame.GridEditor
                         if (_gridCreator.Map.GetSize() == new Vector2Int(_linesX.Length, _linesX[x].lineY.Length))
                             if (_linesX[x].lineY[y] == _gridCreator.Map.GetCells()[x].Values[y].CellType)
                             {
-                                GridCell cell = _gridCreator.Map.GetCells()[x].Values[y];
+                                Cell cell = _gridCreator.Map.GetCells()[x].Values[y];
                                 CustomField(cell);
                             }
 
@@ -175,7 +175,7 @@ namespace BattleGridGame.GridEditor
 
                     if (_gridCreator.Map != null)
                         if (_gridCreator.Map.GetSize() == new Vector2Int(_linesX.Length, _linesX[x].lineY.Length))
-                                EditorGUILayout.ObjectField(_gridCreator.Map.GetCells()[x].Values[y], typeof(GridCell), true);
+                                EditorGUILayout.ObjectField(_gridCreator.Map.GetCells()[x].Values[y], typeof(Cell), true);
 
                     EditorGUILayout.Space(5);
                 }
@@ -211,7 +211,7 @@ namespace BattleGridGame.GridEditor
             return style;
         }
 
-        private void CustomField(GridCell cell)
+        private void CustomField(Cell cell)
         {
             /*if(cell as FruitCell)
             {

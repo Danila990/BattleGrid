@@ -9,9 +9,7 @@ namespace BattleGridGame
         public CellType CellType { get; }
         public Vector3 MovePos { get; }
         public bool IsLocked { get; }
-        public TeamType Team { get; }
-        public void ResetView();
-        public void ChangeColor(CellViewType viewType);
-        public void UpdateTeamColor();
+        public void ResetColor();
+        public void ChangeColor(Color color);
     }
 }

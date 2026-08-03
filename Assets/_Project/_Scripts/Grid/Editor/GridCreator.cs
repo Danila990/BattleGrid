@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 namespace BattleGridGame.GridEditor
 {
     [System.Serializable]
-    public class GridCreator : MoodArray<GridCell>
+    public class GridCreator : MoodArray<Cell>
     {
         private const string PATH_PREFABS_GRID = "Assets/_Project/Prefabs/GridMap";
         private const string NAME_GRID_LOAD = "t:prefab";
@@ -63,15 +63,15 @@ namespace BattleGridGame.GridEditor
             string[] guids = AssetDatabase.FindAssets(NAME_GRID_LOAD, new[] { PATH_PREFABS_GRID });
             Map = new GameObject($"GridMap - {guids.Length}").AddComponent<GridMap>();
 
-            ArrayLine<GridCell>[] newGrid = new ArrayLine<GridCell>[gridSize.x];
+            ArrayLine<Cell>[] newGrid = new ArrayLine<Cell>[gridSize.x];
             for (int x = 0; x < gridSize.x; x++)
             {
                 Transform parrentLine = new GameObject("Line " + x).transform;
                 parrentLine.parent = Map.transform;
-                newGrid[x].Values = new GridCell[gridSize.y];
+                newGrid[x].Values = new Cell[gridSize.y];
                 for (int y = 0; y < gridSize.y; y++)
                 {
-                    GridCell platform = CreateCell(cellTypes[x, y], x, y, middleOffset);
+                    Cell platform = CreateCell(cellTypes[x, y], x, y, middleOffset);
                     platform.transform.parent = parrentLine;
                     newGrid[x].Values[y] = platform;
                     platform.X = x;
@@ -85,10 +85,10 @@ namespace BattleGridGame.GridEditor
             EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
         }
 
-        private GridCell CreateCell(CellType cellType, int gridX, int gridY, Vector3 spawnOffset)
+        private Cell CreateCell(CellType cellType, int gridX, int gridY, Vector3 spawnOffset)
         {
             string findCellName = $"{NAME_CELL}_{cellType}";
-            GridCell newCell = Object.Instantiate(Get<GridCell>(findCellName));
+            Cell newCell = Object.Instantiate(Get<Cell>(findCellName));
             newCell.transform.position = new Vector3(gridX * OffsetCell, 0, gridY * OffsetCell) - spawnOffset;
             newCell.transform.parent = Map.transform;
             return newCell;
@@ -103,12 +103,12 @@ namespace BattleGridGame.GridEditor
 
         private void LoadPrefabs()
         {
-            List<GridCell> listCells = new List<GridCell>();
+            List<Cell> listCells = new List<Cell>();
             string[] guids = AssetDatabase.FindAssets(NAME_CELL_LOAD, new[] { PATH_PREFABS_CELL });
             foreach (string guid in guids)
             {
                 string path = AssetDatabase.GUIDToAssetPath(guid);
-                GridCell prefab = AssetDatabase.LoadAssetAtPath<GridCell>(path);
+                Cell prefab = AssetDatabase.LoadAssetAtPath<Cell>(path);
 
                 if (prefab != null)
                     listCells.Add(prefab);

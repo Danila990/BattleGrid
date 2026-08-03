@@ -4,8 +4,8 @@ namespace BattleGridGame
 {
     public interface IGridMap
     {
-        public T[] FindAllCells<T>(CellType cellType) where T : GridCell;
-        public T FindFirstCell<T>(CellType cellType) where T : GridCell;
+        public T[] FindAllCells<T>(CellType cellType) where T : Cell;
+        public T FindFirstCell<T>(CellType cellType) where T : Cell;
         public bool FitCell(int x, int z);
         public ICell GetCell(int x, int z);
         public ICell GetCell(Vector3 worldPos);
