@@ -1,10 +1,9 @@
-
 using System.Collections;
 using UnityEngine;
 
 namespace UnityServiceLocator
 {
-    public abstract class Root : MonoBehaviour, IRoot
+    public abstract class ContextEntryPoint : MonoBehaviour, IEntryPoint
     {
         private void Start()
         {

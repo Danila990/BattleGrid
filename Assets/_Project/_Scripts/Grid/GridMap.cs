@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,8 +8,8 @@ namespace BattleGridGame
     public class GridMap : MonoBehaviour, IGridMap
     {
         [SerializeField] private MultiArray<Cell> _array = new MultiArray<Cell>();
-        [SerializeField] private Vector3 _gridOffset;
-        [SerializeField] private float _offsetCell = 1.2f;
+        [SerializeField, HideInInspector] private Vector3 _gridOffset;
+        [SerializeField, HideInInspector] private float _offsetCell = 1.2f;
 
         public ArrayLine<Cell>[] GetCells() => _array.GetAll();
 

@@ -882,6 +882,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1976277701}
   - component: {fileID: 1976277700}
+  - component: {fileID: 1976277702}
   m_Layer: 0
   m_Name: GameContext
   m_TagString: Untagged
@@ -902,8 +903,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameCore.UnityServiceLocator.GameContext
   _isAutoBuild: 1
-  _gameOptions: {fileID: 11400000, guid: 45bc76edc085b574a9842acec7f8c59e, type: 2}
-  _mapPrefab: {fileID: 369622270307200815, guid: ce796fc72ac149b46865e5f745e3c723, type: 3}
+  _mapPrefab: {fileID: 7444092886628897032, guid: ce796fc72ac149b46865e5f745e3c723, type: 3}
+  _unitCreator: {fileID: 1976277702}
 --- !u!4 &1976277701
 Transform:
   m_ObjectHideFlags: 0
@@ -919,6 +920,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1976277702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976277699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05b61dd375493774c88e5008607d9fdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleGridGame.UnitCreator
+  _enemyUnit: {fileID: 3556908332691940309, guid: 06abbc7b6a7dbfd458afe39fda983dba, type: 3}
+  _playerUnit: {fileID: 6344319034585081816, guid: 73e5dccea4b30a04496d062cef00e08d, type: 3}
 --- !u!1 &1983834804
 GameObject:
   m_ObjectHideFlags: 0

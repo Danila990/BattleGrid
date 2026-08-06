@@ -1,8 +1,8 @@
 namespace BattleGridGame
 {
-    public enum CellViewType
+    public enum CellInteractionType
     {
-        Standart = 0,
+        Default = 0,
         Select = 1,
         Attack = 2,
         Move = 3,

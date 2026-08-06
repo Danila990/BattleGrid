@@ -81,5 +81,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleGridGame.CustomGridCell
   _renderer: {fileID: 0}
+  _colorOptions: {fileID: 11400000, guid: ba28a0f4d05715440a06b9803435986b, type: 2}
   _cellType: 1
   _isLoked: 1

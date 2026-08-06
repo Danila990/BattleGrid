@@ -2,19 +2,19 @@ using UnityServiceLocator;
 
 namespace BattleGridGame
 {
-    public class GameRoot : Root
+    public class GameEntryPoint : ContextEntryPoint
     {
-        private GridUnitCreator _unitCreator;
+        private UnitCreator _unitCreator;
 
         [Inject]
-        public void Construct(GridUnitCreator unitCretor)
+        public void Construct(UnitCreator unitCretor)
         {
             _unitCreator = unitCretor;
         }
 
         public override void GameInit()
         {
-            //_unitCreator.CreateUnitTest();
+            _unitCreator.CreateUnitTest();
         }
     }
 }

@@ -74,8 +74,7 @@ namespace BattleGridGame.GridEditor
                     Cell platform = CreateCell(cellTypes[x, y], x, y, middleOffset);
                     platform.transform.parent = parrentLine;
                     newGrid[x].Values[y] = platform;
-                    platform.X = x;
-                    platform.Z = y;
+                    platform.SetIndex(x, y);
                     platform.gameObject.name = $"{x}, {y}";
                 }
             }

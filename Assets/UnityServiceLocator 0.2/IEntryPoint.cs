@@ -1,9 +1,8 @@
-
 using System.Collections;
 
 namespace UnityServiceLocator
 {
-    public interface IRoot
+    public interface IEntryPoint
     {
         public void GameInit();
         public void GameStart();

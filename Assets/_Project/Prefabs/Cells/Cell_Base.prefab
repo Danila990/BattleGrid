@@ -158,3 +158,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleGridGame.Cell
   _renderer: {fileID: 7443576565501155853}
+  _colorOptions: {fileID: 11400000, guid: ba28a0f4d05715440a06b9803435986b, type: 2}

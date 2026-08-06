@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -24,6 +25,12 @@ namespace UnityServiceLocator
             TClass loadResources = Resources.Load<TClass>(path);
             loadResources = Object.Instantiate<TClass>(loadResources);
             return Register<TClass>(loadResources); 
+        }
+        public TClass RegisterResources<TClass>() where TClass : Object
+        {
+            TClass loadResources = Resources.Load<TClass>(typeof(TClass).Name);
+            loadResources = Object.Instantiate<TClass>(loadResources);
+            return Register<TClass>(loadResources);
         }
 
         public virtual TClass RegisterInstantiate<TClass>(TClass instantiateMono) where TClass : Object

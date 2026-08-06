@@ -9,7 +9,7 @@ namespace UnityServiceLocator
     {
         [SerializeField] private bool _isAutoBuild = true;
 
-        private IRoot _root;
+        private IEntryPoint _root;
 
         private void Awake()
         {
@@ -31,7 +31,7 @@ namespace UnityServiceLocator
 
         protected override abstract void Configurate(IServiceRegister builder);
 
-        public void RegisterRoot<TRoot>() where TRoot : MonoBehaviour, IRoot
+        public void RegisterRoot<TRoot>() where TRoot : MonoBehaviour, IEntryPoint
         {
             _root = new GameObject(nameof(TRoot)).AddComponent<TRoot>();
         }
