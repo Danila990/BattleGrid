@@ -1,5 +1,3 @@
-
-using System.Collections;
 using UnityEngine;
 
 namespace UnityServiceLocator
@@ -8,8 +6,9 @@ namespace UnityServiceLocator
     public abstract class SceneContext : ServiceContext
     {
         [SerializeField] private bool _isAutoBuild = true;
+        [SerializeField] private bool _injectSceneMonoBehaviour = true;
 
-        private IEntryPoint _root;
+        private IEntryPoint _entryPoint;
 
         private void Awake()
         {
@@ -21,19 +20,19 @@ namespace UnityServiceLocator
         {
             if (_isBuilded) return;
 
-            ServiceLocator.BuildScope(this);
-            if(_root != null)
+            ServiceLocator.BuildScope(this, _injectSceneMonoBehaviour);
+            if(_entryPoint != null)
             {
-                ServiceLocator.Inject(_root);
-                _root.GameInit();
+                ServiceLocator.Inject(_entryPoint);
+                _entryPoint.GameInit();
             }
         }
 
         protected override abstract void Configurate(IServiceRegister builder);
 
-        public void RegisterRoot<TRoot>() where TRoot : MonoBehaviour, IEntryPoint
+        public void RegisterEntryPoint<TEntryPoint>() where TEntryPoint : MonoBehaviour, IEntryPoint
         {
-            _root = new GameObject(nameof(TRoot)).AddComponent<TRoot>();
+            _entryPoint = new GameObject(nameof(TEntryPoint)).AddComponent<TEntryPoint>();
         }
     }
 }

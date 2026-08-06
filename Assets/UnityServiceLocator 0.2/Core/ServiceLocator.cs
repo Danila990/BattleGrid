@@ -36,7 +36,7 @@ namespace UnityServiceLocator
         public static void InjectMono(object obj) => _instance._injector.InjectMono(obj);
         public static void InjectMono(MonoBehaviour obj) => _instance._injector.InjectMono(obj);
 
-        public static void BuildScope(IServiceContext configurateScope)
+        public static void BuildScope(IServiceContext configurateScope, bool injectSceneMonoBehaviour = false)
         {
             _instance._sceneContainer.Clear();
             IServiceRegister builder = new ServiceRegister(_instance._sceneContainer);
@@ -45,7 +45,8 @@ namespace UnityServiceLocator
             foreach (var service in _instance._sceneContainer.Services)
                 _instance._injector.InjectMono(service);
 
-            _instance._injector.InjectAllMonoBehaviour();
+            if(injectSceneMonoBehaviour)
+                _instance._injector.InjectAllMonoBehaviour();
         }
 
         private void BuildProject()

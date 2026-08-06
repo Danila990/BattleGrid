@@ -107,7 +107,7 @@ namespace BattleGridGame
             _gridMap.GetCellAndNear(_currentSelectCell.X, _currentSelectCell.Z, out ICell[] moveCells, _currentSelectCell.Unit.MoveRange);
             List<ICell> cells = new List<ICell>();
             foreach(ICell cell in moveCells)
-                if(cell.Unit == null)
+                if(cell.Unit == null && !cell.IsLocked)
                     cells.Add(cell);
 
             return cells.ToArray();
