@@ -24,7 +24,7 @@ namespace UnityServiceLocator
             if(_entryPoint != null)
             {
                 ServiceLocator.Inject(_entryPoint);
-                _entryPoint.GameInit();
+                _entryPoint.GameAwake();
             }
         }
 
@@ -32,7 +32,7 @@ namespace UnityServiceLocator
 
         public void RegisterEntryPoint<TEntryPoint>() where TEntryPoint : MonoBehaviour, IEntryPoint
         {
-            _entryPoint = new GameObject(nameof(TEntryPoint)).AddComponent<TEntryPoint>();
+            _entryPoint = new GameObject(typeof(TEntryPoint).Name).AddComponent<TEntryPoint>();
         }
     }
 }

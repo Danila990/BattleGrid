@@ -1,20 +1,27 @@
+using System.Collections;
 using UnityServiceLocator;
 
 namespace BattleGridGame
 {
     public class GameEntryPoint : ContextEntryPoint
     {
-        private UnitCreator _unitCreator;
+        [Inject] private UnitCreator _unitCreator;
+        [Inject] private PlayerUnitInteractor _playerUnitInteraction;
 
-        [Inject]
-        public void Construct(UnitCreator unitCretor)
-        {
-            _unitCreator = unitCretor;
-        }
-
-        public override void GameInit()
+        public override void GameAwake()
         {
             _unitCreator.CreateUnitTest();
+        }
+
+        public override IEnumerator GameCorutine()
+        {
+            //player loop
+            while (true)
+            {
+                yield return _playerUnitInteraction.UnitInteraction();
+            }
+
+            yield return base.GameCorutine();
         }
     }
 }

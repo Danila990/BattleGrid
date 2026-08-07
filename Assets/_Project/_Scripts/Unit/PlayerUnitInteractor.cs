@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityServiceLocator;
@@ -7,106 +8,74 @@ namespace BattleGridGame
     public class PlayerUnitInteractor : MonoBehaviour
     {
         [Inject] private IGridMap _gridMap;
+        [Inject] private UnitGridMapEvents _battler;
 
-        private ICell _currentSelectCell;
+        private ICell _playerUnitCell;
 
-        private void Update()
+        public IEnumerator UnitInteraction()
         {
-            if (!Input.GetMouseButtonDown(0) || _gridMap == null) return;
-
-            if (_gridMap.TryGetMouseClickCell(out ICell clickedCell))
+            while (true)
             {
-                if (_currentSelectCell == null)
+                yield return null;
+
+                if (Input.GetMouseButtonDown(0) && _gridMap.TryGetMouseClickCell(out ICell clickedCell))
                 {
-                    if (clickedCell.Unit != null && clickedCell.Team == TeamType.Player)
+                    if (_playerUnitCell == null)
                     {
-                        _currentSelectCell = clickedCell;
-                        ActivateViewCells();
-                    }
-                    return;
-                }
-                else
-                {
-                    DeactivateViewCells();
-                    if (clickedCell.Unit != null && clickedCell.Unit.Team != _currentSelectCell.Unit.Team)
-                    {
-                        BattleUnit(clickedCell);
-                        if (_currentSelectCell != null && clickedCell.Unit == null)
-                            MoveUnit(clickedCell);
+                        if (clickedCell.Unit != null && clickedCell.Team == TeamType.Player)
+                        {
+                            _playerUnitCell = clickedCell;
+                            ActivateInteractionColorCells();
+                        }
                     }
                     else
-                        MoveUnit(clickedCell);
+                    {
+                        DeactivateViewCells();
+                        if (clickedCell.Unit != null && clickedCell.Unit.Team != TeamType.Player)
+                            yield return PlayerUnitAttackUnit(clickedCell);
 
-                    _currentSelectCell = null;
+                        else
+                            yield return PlayerUnitMove(clickedCell);
+
+                        _playerUnitCell = null;
+                    }
                 }
             }
         }
 
-        private void MoveUnit(ICell clickedCell)
+        private IEnumerator PlayerUnitAttackUnit(ICell enemyUnitCell)
         {
+            if (_gridMap.CheckRange(_playerUnitCell, enemyUnitCell, _playerUnitCell.Unit.AttackRange))
+                yield return _battler.UnitBattle(_playerUnitCell, enemyUnitCell);
+        }
+
+        private IEnumerator PlayerUnitMove(ICell clickedCell)
+        {
+            if(_gridMap.CheckRange(_playerUnitCell, clickedCell, _playerUnitCell.Unit.MoveRange))
+                yield return _battler.UnitMove(_playerUnitCell, clickedCell);
+        }
+
+        private void ActivateInteractionColorCells()
+        {
+            _playerUnitCell.SetInteractionColor(CellInteractionType.Select);
             foreach (var moveCell in GetMoveCells())
-                if(clickedCell.Equals(moveCell))
-                {
-                    _currentSelectCell.Unit.Movement(clickedCell.MovePos);
-                    clickedCell.SetUnit(_currentSelectCell.Unit);
-                    clickedCell.SetTeam(_currentSelectCell.Team);
-                    _currentSelectCell.SetUnit(null);
-                    break;
-                }
-        }
+                moveCell.SetInteractionColor(CellInteractionType.Move);
 
-        private void BattleUnit(ICell clickedCell)
-        {
-            foreach (var attackCell in GetAttackCells())
-                if (clickedCell.Equals(attackCell))
-                {
-                    _currentSelectCell.Unit.TakeDamage(clickedCell.Unit.Damage);
-                    clickedCell.Unit.TakeDamage(_currentSelectCell.Unit.Damage);
-
-                    if (clickedCell.Unit.IsDead)
-                    {
-                        Destroy(clickedCell.Unit.gameObject);
-                        clickedCell.SetUnit(null);
-                    }
-
-                    if (_currentSelectCell.Unit.IsDead)
-                    {
-                        Destroy(_currentSelectCell.Unit.gameObject);
-                        _currentSelectCell.SetUnit(null);
-                        _currentSelectCell = null;
-                    }
-
-                    break;
-                }
-        }
-
-        private void ActivateViewCells()
-        {
-            _currentSelectCell.SetInteractionColor(CellInteractionType.Select);
-
-            foreach (var moveCells in GetMoveCells())
-                moveCells.SetInteractionColor(CellInteractionType.Move);
-
-            foreach (var attacCells in GetAttackCells())
-                attacCells.SetInteractionColor(CellInteractionType.Attack);
+            foreach (var attacCell in GetAttackCells())
+                attacCell.SetInteractionColor(CellInteractionType.Attack);
         }
 
         private void DeactivateViewCells()
         {
-            _currentSelectCell.SetInteractionColor(CellInteractionType.Default);
-
-            foreach (var moveCells in GetMoveCells())
-                moveCells.SetInteractionColor(CellInteractionType.Default);
-
-            foreach (var attacCells in GetAttackCells())
-                attacCells.SetInteractionColor(CellInteractionType.Default);
+            _playerUnitCell.SetInteractionColor(CellInteractionType.Default);
+            foreach (var cell in _gridMap.GetNearCell(_playerUnitCell.X, _playerUnitCell.Z, _playerUnitCell.Unit.GetMaxRange))
+                cell.SetInteractionColor(CellInteractionType.Default);
         }
 
         private ICell[] GetMoveCells()
         {
-            _gridMap.GetCellAndNear(_currentSelectCell.X, _currentSelectCell.Z, out ICell[] moveCells, _currentSelectCell.Unit.MoveRange);
             List<ICell> cells = new List<ICell>();
-            foreach(ICell cell in moveCells)
+            foreach(ICell cell in _gridMap.GetNearCell(_playerUnitCell.X, _playerUnitCell.Z, _playerUnitCell.Unit.MoveRange))
                 if(cell.Unit == null && !cell.IsLocked)
                     cells.Add(cell);
 
@@ -115,11 +84,10 @@ namespace BattleGridGame
 
         private ICell[] GetAttackCells()
         {
-            _gridMap.GetCellAndNear(_currentSelectCell.X, _currentSelectCell.Z, out ICell[] moveCells, _currentSelectCell.Unit.AttackRange);
             List<ICell> cells = new List<ICell>();
-            foreach (ICell cell in moveCells)
+            foreach (ICell cell in _gridMap.GetNearCell(_playerUnitCell.X, _playerUnitCell.Z, _playerUnitCell.Unit.AttackRange))
                 if (cell.Unit != null)
-                    if(cell.Unit.Team != _currentSelectCell.Unit.Team)
+                    if(cell.Unit.Team != _playerUnitCell.Unit.Team)
                         cells.Add(cell);
 
             return cells.ToArray();

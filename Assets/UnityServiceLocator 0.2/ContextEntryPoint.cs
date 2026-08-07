@@ -8,30 +8,34 @@ namespace UnityServiceLocator
         private void Start()
         {
             GameStart();
+            StartCoroutine(CorutinerLoop());
         }
 
         private void Update()
         {
-            GameLoop();
+            GameUpdate();
         }
 
-        public void InitRoot()
-        {
-            GameInit();
-            StartCoroutine(GameCorutineLoop());
-        }
-
-        public virtual IEnumerator GameCorutineLoop()
+        public virtual IEnumerator GameCorutine()
         {
             yield return null;
         }
 
-        public virtual void GameInit() { }
+        public virtual void GameAwake() { }
 
-        public virtual void GameEnd() { }
+        public virtual void GameEnd()
+        {
+            StopAllCoroutines();
+        }
 
-        public virtual void GameLoop() { }
+        public virtual void GameUpdate() { }
 
         public virtual void GameStart() { }
+
+        private IEnumerator CorutinerLoop()
+        {
+            while (true)
+                yield return GameCorutine();
+        }
     }
 }

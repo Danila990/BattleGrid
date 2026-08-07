@@ -14,6 +14,7 @@ namespace BattleGridGame
             register.RegisterInstantiate<GridMap, IGridMap>(_mapPrefab);
             register.Register(_unitCreator);
             register.RegisteNewGameobject<PlayerUnitInteractor>();
+            register.RegisteNewGameobject<UnitGridMapEvents>();
         }
     }
 }

@@ -11,6 +11,17 @@ namespace BattleGridGame
         [field: SerializeField] public int AttackRange { get; private set; } = 1;
 
         public bool IsDead  => Health <= 0;
+        public int GetMaxRange
+        {
+            get
+            {
+                if(AttackRange > MoveRange)
+                    return AttackRange;
+                else 
+                    return MoveRange;
+            }
+        }
+
 
         public void TakeDamage(float damage)
         {

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,10 +20,10 @@ namespace BattleGridGame
 
         public Vector2Int GetSize() => _array.SizeGrid;
 
-        public ICell GetCellAndNear(Vector3 worldPos, out ICell[] near)
+        public ICell GetCellAndNear(int x, int z, out ICell[] near, int range = 1)
         {
-            GetXZ(worldPos, out int x, out int z);
-            return GetCellAndNear(x, z, out near);
+            near = GetNearCell(x, z, range);
+            return GetCell(x, z);
         }
 
         /*public Cell[] GetNear(int x, int z, Vector2Int[] indexs)
@@ -41,7 +40,20 @@ namespace BattleGridGame
             return nearCells.ToArray();
         }*/
 
-        public ICell GetCellAndNear(int x, int z, out ICell[] near, int range = 1)
+        public bool CheckRange(ICell cell1, ICell cell2, int range)
+        {
+            int xMin = cell1.X - range;
+            int xMax = cell1.X + range;
+            int zMin = cell1.Z - range;
+            int zMax = cell1.Z + range;
+
+            if(cell2.X >= xMin && cell2.X <= xMax && cell2.Z >= zMin && cell2.Z <= zMax)
+                return true;
+
+            return false;
+        }
+
+        public ICell[] GetNearCell(int x, int z, int range = 1)
         {
             List<ICell> nearCells = new List<ICell>();
             int xMin = x - range;
@@ -54,10 +66,7 @@ namespace BattleGridGame
                     if (FitCell(i, j))
                         nearCells.Add(GetCell(i, j));
 
-            ICell centerCell = GetCell(x, z);
-            nearCells.Remove(centerCell);
-            near = nearCells.ToArray();
-            return centerCell;
+            return nearCells.ToArray();
         }
 
         public bool TryGetMouseClickCell(out ICell cell)
