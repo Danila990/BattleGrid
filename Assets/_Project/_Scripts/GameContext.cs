@@ -10,7 +10,7 @@ namespace BattleGridGame
 
         protected override void Configurate(IServiceRegister register)
         {
-            RegisterEntryPoint<GameEntryPoint>();
+            RegisterSceneRoot<GameRoot>();
             register.RegisterInstantiate<GridMap, IGridMap>(_mapPrefab);
             register.Register(_unitCreator);
             register.RegisteNewGameobject<PlayerUnitInteractor>();

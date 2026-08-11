@@ -8,7 +8,7 @@ namespace UnityServiceLocator
         [SerializeField] private bool _isAutoBuild = true;
         [SerializeField] private bool _injectSceneMonoBehaviour = true;
 
-        private IEntryPoint _entryPoint;
+        private IRootContoller _sceneRoot;
 
         private void Awake()
         {
@@ -21,18 +21,18 @@ namespace UnityServiceLocator
             if (_isBuilded) return;
 
             ServiceLocator.BuildScope(this, _injectSceneMonoBehaviour);
-            if(_entryPoint != null)
+            if(_sceneRoot != null)
             {
-                ServiceLocator.Inject(_entryPoint);
-                _entryPoint.GameAwake();
+                ServiceLocator.Inject(_sceneRoot);
+                _sceneRoot.OnAwake();
             }
         }
 
         protected override abstract void Configurate(IServiceRegister builder);
 
-        public void RegisterEntryPoint<TEntryPoint>() where TEntryPoint : MonoBehaviour, IEntryPoint
+        public void RegisterSceneRoot<TSceneRoot>() where TSceneRoot : MonoBehaviour, IRootContoller
         {
-            _entryPoint = new GameObject(typeof(TEntryPoint).Name).AddComponent<TEntryPoint>();
+            _sceneRoot = new GameObject(typeof(TSceneRoot).Name).AddComponent<TSceneRoot>();
         }
     }
 }
