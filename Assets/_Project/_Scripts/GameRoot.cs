@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEngine;
 using UnityServiceLocator;
 
 namespace BattleGridGame
@@ -27,8 +28,9 @@ namespace BattleGridGame
         public IEnumerator MainGameRoot()
         {
             //player loop
-            while (_playerStepCounter.CanStep)
+            while (true)
             {
+                yield return new WaitUntil(() => _playerStepCounter.CanStep);
                 yield return _playerUnitInteraction.UnitInteraction();
                 _playerStepCounter.Step();
             }

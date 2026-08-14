@@ -34,7 +34,6 @@ namespace BattleGridGame
                 TeamType.Player => Player,
                 TeamType.AI_1 => AI_1,
                 TeamType.AI_2 => AI_2,
-                TeamType.AI_3 => AI_3,
                 TeamType.None or _ => Default,
             };
         }

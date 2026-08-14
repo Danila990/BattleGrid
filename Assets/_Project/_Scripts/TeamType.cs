@@ -6,6 +6,5 @@ namespace BattleGridGame
         Player = 1,
         AI_1 = 2,
         AI_2 = 3,
-        AI_3 = 4,
     }
 }

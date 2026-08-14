@@ -4,7 +4,6 @@ using UnityServiceLocator;
 
 namespace BattleGridGame
 {
-
     public class PlayerUnitInteractor : MonoBehaviour
     {
         [Inject] private IGridMap _gridMap;

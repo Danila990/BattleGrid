@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3185991605823008199
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7443576565501155853, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 4084a843b9ef6af45a63b7163f9fbefb, type: 2}
+    - target: {fileID: 7871440673124990312, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871440673124990312, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871440673124990312, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871440673124990312, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871440673124990312, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871440673124990312, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871440673124990312, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871440673124990312, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871440673124990312, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871440673124990312, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9047812946352904097, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+      propertyPath: m_Name
+      value: Cell_Player_Start
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2354011586080460796, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9047812946352904097, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6088495704872626735}
+  m_SourcePrefab: {fileID: 100100000, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+--- !u!23 &5438676055347607498 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7443576565501155853, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+  m_PrefabInstance: {fileID: 3185991605823008199}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5883569818048625254 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9047812946352904097, guid: 5f97517cb4c39a94d91aba29d84c46cf, type: 3}
+  m_PrefabInstance: {fileID: 3185991605823008199}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6088495704872626735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5883569818048625254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7251c53d847c02140a8079321c66563f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleGridGame.CustomCell
+  _renderer: {fileID: 5438676055347607498}
+  _colorOptions: {fileID: 11400000, guid: ba28a0f4d05715440a06b9803435986b, type: 2}
+  _x: 0
+  _z: 0
+  _cellType: 2
+  _isLoked: 0
