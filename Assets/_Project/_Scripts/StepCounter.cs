@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class StepCounter : MonoBehaviour
 {
-    public static event Action<int> OnCountStep;
+    public event Action<int> OnCountStep;
 
     [field: SerializeField] public int MaxStepCount = 3;
 
-    public static int StepCount { get; private set; }
+    public int StepCount { get; private set; }
 
     public bool CanStep => StepCount > 0;
 

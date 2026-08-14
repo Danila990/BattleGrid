@@ -6,59 +6,26 @@ using Object = UnityEngine.Object;
 
 namespace UnityServiceLocator
 {
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method | AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Field)]
     public sealed class InjectAttribute : PropertyAttribute { }
 
     public class ServiceInjector : IServiceInjector
     {
         private const BindingFlags BINDING_FLAGS = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy;
 
-        public void InjectAllMonoBehaviour()
+        public void InjectAllScene()
         {
-            var mono = Object.FindObjectsByType<MonoBehaviour>();
+            var sceneMonoBehaviours = Object.FindObjectsByType<MonoBehaviour>();
 
-            foreach (var monoBehaviour in mono)
-            {
-                if (!IsInjectable(monoBehaviour)) return;
-
-                var injectableFields = monoBehaviour.GetType().GetFields(BINDING_FLAGS)
-                .Where(member => Attribute.IsDefined(member, typeof(InjectAttribute)));
-
-                foreach (var injectableField in injectableFields)
-                    if (injectableField.GetValue(monoBehaviour) != null)
-                        continue;
-
-                InjectMono(monoBehaviour);
-            }
-        }
-
-        public IServiceInjector InjectMono(object obj)
-        {
-            if (obj is MonoBehaviour monoBehaviour )
-                return InjectMono(monoBehaviour);
-
-            Inject(obj);
-            return this;
-        }
-
-        public IServiceInjector InjectMono(MonoBehaviour behavior)
-        {
-            var behaviours = behavior.GetComponentsInChildren<MonoBehaviour>();
-            foreach (var mono in behaviours)
-                Inject(mono);
-
-            return this;
+            foreach (var monoBehaviour in sceneMonoBehaviours)
+                Inject(monoBehaviour);
         }
 
         public IServiceInjector Inject(object obj)
         {
             if (!IsInjectable(obj)) return this;
 
-            var type = obj.GetType();
-            InjectFields(type, obj);
-            InjectMethods(type, obj);
-            InjectProperties(type, obj);
-
+            InjectFields(obj.GetType(), obj);
             return this;
         }
 
@@ -82,40 +49,6 @@ namespace UnityServiceLocator
                     throw new Exception($"Failed to inject into field '{injectableField.Name}' of class '{type.Name}'.");
 
                 injectableField.SetValue(instance, resolvedInstance);
-            }
-        }
-
-        private void InjectMethods(Type type, object instance)
-        {
-            var injectableMethods = type.GetMethods(BINDING_FLAGS)
-                .Where(member => Attribute.IsDefined(member, typeof(InjectAttribute)));
-
-            foreach (var injectableMethod in injectableMethods)
-            {
-                var requiredParameters = injectableMethod.GetParameters()
-                    .Select(parameter => parameter.ParameterType)
-                    .ToArray();
-                var resolvedInstances = requiredParameters.Select(ServiceLocator.Get<object>).ToArray();
-                if (resolvedInstances.Any(resolvedInstance => resolvedInstance == null))
-                    throw new Exception($"Failed to inject into method '{injectableMethod.Name}' of class '{type.Name}'.");
-
-                injectableMethod.Invoke(instance, resolvedInstances);
-            }
-        }
-
-        private void InjectProperties(Type type, object instance)
-        {
-            var injectableProperties = type.GetProperties(BINDING_FLAGS)
-                .Where(member => Attribute.IsDefined(member, typeof(InjectAttribute)));
-
-            foreach (var injectableProperty in injectableProperties)
-            {
-                var propertyType = injectableProperty.PropertyType;
-                var resolvedInstance = ServiceLocator.Get<object>(propertyType);
-                if (resolvedInstance == null)
-                    throw new Exception($"Failed to inject into property '{injectableProperty.Name}' of class '{type.Name}'.");
-
-                injectableProperty.SetValue(instance, resolvedInstance);
             }
         }
 

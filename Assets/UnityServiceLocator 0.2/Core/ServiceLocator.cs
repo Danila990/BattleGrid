@@ -33,8 +33,6 @@ namespace UnityServiceLocator
         public static T Get<T>() where T : class => Get<T>(typeof(T));
 
         public static void Inject(object obj) => _instance._injector.Inject(obj);
-        public static void InjectMono(object obj) => _instance._injector.InjectMono(obj);
-        public static void InjectMono(MonoBehaviour obj) => _instance._injector.InjectMono(obj);
 
         public static void BuildScope(IServiceContext configurateScope, bool injectSceneMonoBehaviour = false)
         {
@@ -43,10 +41,10 @@ namespace UnityServiceLocator
             configurateScope.BuildContext(builder);
 
             foreach (var service in _instance._sceneContainer.Services)
-                _instance._injector.InjectMono(service);
+                _instance._injector.Inject(service);
 
             if(injectSceneMonoBehaviour)
-                _instance._injector.InjectAllMonoBehaviour();
+                _instance._injector.InjectAllScene();
         }
 
         private void BuildProject()
@@ -64,7 +62,7 @@ namespace UnityServiceLocator
 
             context.BuildContext(builder);
             foreach (var service in _globalContainer.Services)
-                _injector.InjectMono(service);
+                _injector.Inject(service);
         }
     }
 }

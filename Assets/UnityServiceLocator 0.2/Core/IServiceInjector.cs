@@ -4,9 +4,7 @@ namespace UnityServiceLocator
 {
     public interface IServiceInjector
     {
-        public void InjectAllMonoBehaviour();
+        public void InjectAllScene();
         public IServiceInjector Inject(object obj);
-        public IServiceInjector InjectMono(object obj);
-        public IServiceInjector InjectMono(MonoBehaviour obj);
     }
 }

@@ -7,14 +7,15 @@ namespace BattleGridGame
     {
         [SerializeField] private GridMap _mapPrefab;
         [SerializeField] private UnitCreator _unitCreator;
+        [SerializeField] private PlayerStepCounter _playerStepCounter;
 
         protected override void Configurate(IServiceRegister register)
         {
             RegisterSceneRoot<GameRoot>();
             register.RegisterInstantiate<GridMap, IGridMap>(_mapPrefab);
-            register.Register(_unitCreator);
             register.RegisteNewGameobject<PlayerUnitInteractor>();
-            register.RegisteNewGameobject<UnitGridMapEvents>();
+            register.Register(_unitCreator);
+            register.Register(_playerStepCounter);
         }
     }
 }

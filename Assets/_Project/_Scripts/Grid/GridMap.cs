@@ -26,19 +26,18 @@ namespace BattleGridGame
             return GetCell(x, z);
         }
 
-        /*public Cell[] GetNear(int x, int z, Vector2Int[] indexs)
+        public ICell[] GetNear(int x, int z, Vector2Int[] indexs)
         {
-            List<Cell> nearCells = new List<Cell>();
-            List<Vector2Int> cellIndex = new List<Vector2Int>();
-            foreach (var vector in indexs)
-                cellIndex.Add(new Vector2Int(vector.x + x, vector.y + z));
-
-            foreach (var index in cellIndex)
+            List<ICell> nearCells = new List<ICell>();
+            foreach (var index in indexs)
+            {
+                Vector2Int cellIndex = new Vector2Int(index.x + x, index.y + z);
                 if (FitCell(index.x, index.y))
                     nearCells.Add(GetCell(index.x, index.y));
+            }
 
             return nearCells.ToArray();
-        }*/
+        }
 
         public bool CheckRange(ICell cell1, ICell cell2, int range)
         {

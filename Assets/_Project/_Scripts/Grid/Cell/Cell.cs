@@ -13,7 +13,7 @@ namespace BattleGridGame
         public int X => _x;
         public int Z => _z;
         public TeamType Team { get; private set; } = TeamType.None;
-        public Unit Unit { get; private set; } = null;
+        public UnitBase Unit { get; private set; } = null;
         public virtual CellType CellType => CellType.Base;
         public virtual Vector3 MovePos => transform.position;
         public virtual bool IsLocked => false;
@@ -37,7 +37,7 @@ namespace BattleGridGame
                 ChangeColor(_colorOptions.GetInteractionColor(cellInteraction));
         }
 
-        public void SetUnit(Unit unit)
+        public void SetUnit(UnitBase unit)
         {
             Unit = unit;
         }

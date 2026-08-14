@@ -5,20 +5,22 @@ namespace BattleGridGame
 {
     public class UnitCreator : MonoBehaviour
     {
-        [SerializeField] private Unit _enemyUnit;
-        [SerializeField] private Unit _playerUnit;
+        [SerializeField] private DefaultUnit _enemyUnit;
+        [SerializeField] private DefaultUnit _playerUnit;
 
         [Inject] private IGridMap _gridMap;
 
         public void CreateUnitTest()
         {
-            CreateUnit(_gridMap.GetCell(0, 0), _playerUnit);
-            CreateUnit(_gridMap.GetCell(2, 2), _enemyUnit);
+            CreateUnit(_gridMap.GetCell(0, 0), _playerUnit, TeamType.Player);
+            CreateUnit(_gridMap.GetCell(2, 2), _enemyUnit, TeamType.AI_1);
         }
 
-        private Unit CreateUnit(ICell cell, Unit prefab)
+        private UnitBase CreateUnit(ICell cell, UnitBase prefab, TeamType teamType)
         {
-            Unit unit = Instantiate(prefab, cell.MovePos, Quaternion.identity);
+            UnitBase unit = Instantiate(prefab, cell.MovePos, Quaternion.identity);
+            ServiceLocator.Inject(unit);
+            unit.SetupUnit(teamType, cell);
             cell.SetUnit(unit);
             cell.SetTeam(unit.Team);
             return cell.Unit;
