@@ -1,3 +1,4 @@
+using Codice.Client.BaseCommands;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -16,13 +17,13 @@ namespace BattleGridGame.GridEditor
         private const string NAME_CELL_LOAD = "Cell t:prefab";
         private const string NAME_CELL = "Cell";
 
-        public GridMap Map;
+        public WorldGrid Map;
         public float OffsetCell = 1.1f;
 
         public GridCreator() 
         {
             LoadPrefabs();
-            Map = Object.FindAnyObjectByType<GridMap>();
+            Map = Object.FindAnyObjectByType<WorldGrid>();
         }
 
         public void CreateGrid(CellType[,] cellTypes)
@@ -61,7 +62,7 @@ namespace BattleGridGame.GridEditor
             Vector3 middleOffset = MiddleOffest(OffsetCell, gridSize);
 
             string[] guids = AssetDatabase.FindAssets(NAME_GRID_LOAD, new[] { PATH_PREFABS_GRID });
-            Map = new GameObject($"GridMap - {guids.Length}").AddComponent<GridMap>();
+            Map = new GameObject($"GridMap - {guids.Length}").AddComponent<WorldGrid>();
 
             ArrayLine<Cell>[] newGrid = new ArrayLine<Cell>[gridSize.x];
             for (int x = 0; x < gridSize.x; x++)
@@ -78,8 +79,8 @@ namespace BattleGridGame.GridEditor
                     platform.gameObject.name = $"{x}, {y}";
                 }
             }
-
-            Map.SetupMap(newGrid, middleOffset);
+            Map.MultiArray.Set(newGrid);
+            Map.GridPositionOffset = middleOffset;
             Undo.RegisterCreatedObjectUndo(Map.gameObject, "Create Grid map");
             EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
         }

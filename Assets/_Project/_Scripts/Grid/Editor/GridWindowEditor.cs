@@ -99,7 +99,7 @@ namespace BattleGridGame.GridEditor
         {
             if (_gridCreator.Map == null) return;
 
-            var cell = _gridCreator.Map.GetCells();
+            var cell = _gridCreator.Map.MultiArray.GetAll();
 
             _linesX = new ConstructorLine[cell.Length];
             for (int x = 0; x < _linesX.Length; x++)
@@ -165,9 +165,9 @@ namespace BattleGridGame.GridEditor
 
                     if (_gridCreator.Map != null)
                         if (_gridCreator.Map.GetSize() == new Vector2Int(_linesX.Length, _linesX[x].lineY.Length))
-                            if (_linesX[x].lineY[y] == _gridCreator.Map.GetCells()[x].Values[y].CellType)
+                            if (_linesX[x].lineY[y] == _gridCreator.Map.MultiArray.GetAll()[x].Values[y].CellType)
                             {
-                                Cell cell = _gridCreator.Map.GetCells()[x].Values[y];
+                                Cell cell = _gridCreator.Map.MultiArray.GetAll()[x].Values[y];
                                 CustomField(cell);
                             }
 
@@ -175,7 +175,7 @@ namespace BattleGridGame.GridEditor
 
                     if (_gridCreator.Map != null)
                         if (_gridCreator.Map.GetSize() == new Vector2Int(_linesX.Length, _linesX[x].lineY.Length))
-                                EditorGUILayout.ObjectField(_gridCreator.Map.GetCells()[x].Values[y], typeof(Cell), true);
+                                EditorGUILayout.ObjectField(_gridCreator.Map.MultiArray.GetAll()[x].Values[y], typeof(Cell), true);
 
                     EditorGUILayout.Space(5);
                 }

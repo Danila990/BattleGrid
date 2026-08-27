@@ -2,7 +2,7 @@
 
 namespace BattleGridGame
 {
-    public interface IGridMap
+    public interface IWorldGrid
     {
         public bool CheckRange(ICell cell1, ICell cell2, int range);
         public T[] FindAllCells<T>(CellType cellType) where T : Cell;

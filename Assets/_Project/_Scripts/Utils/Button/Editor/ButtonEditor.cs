@@ -38,8 +38,6 @@ public class ButtonEditor : Editor
         if (!hasButtons) return;
 
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField("Buttons", EditorStyles.boldLabel);
-
         foreach (var method in methods)
         {
             var buttonAttr = (ButtonAttribute)Attribute.GetCustomAttribute(

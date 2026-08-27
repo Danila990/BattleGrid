@@ -16,9 +16,14 @@ public class MultiArray<T> where T : Object
     public int SizeX => _values.Length;
     public int SizeY => _values[0].Values.Length;
 
-    public Vector2Int SizeGrid => new Vector2Int(SizeX, SizeY);
+    public Vector2Int Size => new Vector2Int(SizeX, SizeY);
 
     public void Set(ArrayLine<T>[] values) => _values = values;
+
+    public void Change(T newValue, int x, int y)
+    {
+        _values[x].Values[y] = newValue; 
+    }
 
     public ArrayLine<T>[] GetAll() => _values;
 

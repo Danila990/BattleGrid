@@ -11,7 +11,7 @@ namespace BattleGridGame
         [SerializeField] private int _rangeAttack = 1;
         [SerializeField] private int _rangeMovement = 1;
 
-        [Inject] protected IGridMap _map;
+        [Inject] protected IWorldGrid _map;
 
         public ICell UnitCell { get; private set; }
         public TeamType Team { get; private set; }

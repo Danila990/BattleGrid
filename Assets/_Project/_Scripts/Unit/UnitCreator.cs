@@ -8,7 +8,7 @@ namespace BattleGridGame
         [SerializeField] private DefaultUnit _enemyUnit;
         [SerializeField] private DefaultUnit _playerUnit;
 
-        [Inject] private IGridMap _gridMap;
+        [Inject] private IWorldGrid _gridMap;
 
         public void CreateUnitTest()
         {

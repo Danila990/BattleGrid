@@ -6,7 +6,7 @@ namespace BattleGridGame
 {
     public class PlayerUnitInteractor : MonoBehaviour
     {
-        [Inject] private IGridMap _gridMap;
+        [Inject] private IWorldGrid _gridMap;
 
         private ICell _playerUnitCell;
 

@@ -4,21 +4,12 @@ using UnityEngine;
 
 namespace BattleGridGame
 {
-    public class GridMap : MonoBehaviour, IGridMap
+    public class WorldGrid : MonoBehaviour, IWorldGrid
     {
-        [SerializeField] private MultiArray<Cell> _array = new MultiArray<Cell>();
-        [SerializeField, HideInInspector] private Vector3 _gridOffset;
-        [SerializeField, HideInInspector] private float _offsetCell = 1.2f;
-
-        public ArrayLine<Cell>[] GetCells() => _array.GetAll();
-
-        public void SetupMap(ArrayLine<Cell>[] values, Vector3 gridOffset)
-        {
-            _gridOffset = gridOffset;
-            _array.Set(values);
-        }
-
-        public Vector2Int GetSize() => _array.SizeGrid;
+        public MultiArray<Cell> MultiArray = new MultiArray<Cell>();
+        public Vector3 GridPositionOffset;
+        public float CellSize = 1.2f;
+        public Vector2Int GetSize() => MultiArray.Size;
 
         public ICell GetCellAndNear(int x, int z, out ICell[] near, int range = 1)
         {
@@ -46,7 +37,7 @@ namespace BattleGridGame
             int zMin = cell1.Z - range;
             int zMax = cell1.Z + range;
 
-            if(cell2.X >= xMin && cell2.X <= xMax && cell2.Z >= zMin && cell2.Z <= zMax)
+            if (cell2.X >= xMin && cell2.X <= xMax && cell2.Z >= zMin && cell2.Z <= zMax)
                 return true;
 
             return false;
@@ -100,19 +91,19 @@ namespace BattleGridGame
             return GetCell(x, z);
         }
 
-        public ICell GetCell(int x, int z) => _array.Get(x, z);
+        public ICell GetCell(int x, int z) => MultiArray.Get(x, z);
 
-        public bool FitCell(int x, int z) => _array.Fit(x, z);
+        public bool FitCell(int x, int z) => MultiArray.Fit(x, z);
 
         public void GetXZ(Vector3 worldPos, out int x, out int z)
         {
-            x = Mathf.FloorToInt((worldPos.x + _gridOffset.x) / _offsetCell + _offsetCell / 2);
-            z = Mathf.FloorToInt((worldPos.z + _gridOffset.z) / _offsetCell + _offsetCell / 2);
+            x = Mathf.FloorToInt((worldPos.x + GridPositionOffset.x) / CellSize + CellSize / 2);
+            z = Mathf.FloorToInt((worldPos.z + GridPositionOffset.z) / CellSize + CellSize / 2);
         }
 
         public T FindFirstCell<T>(CellType cellType) where T : Cell
         {
-            return _array.GetAll()
+            return MultiArray.GetAll()
                 .SelectMany(line => line.Values)
                 .Where(cell => cell.CellType == cellType)
                 .Cast<T>()
@@ -121,7 +112,7 @@ namespace BattleGridGame
 
         public T[] FindAllCells<T>(CellType cellType) where T : Cell
         {
-            return _array.GetAll()
+            return MultiArray.GetAll()
                 .SelectMany(line => line.Values)
                 .Where(cell => cell.CellType == cellType)
                 .Cast<T>()

@@ -888,7 +888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15868d0415d9946439a0ca19804d755a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameCore.UnityServiceLocator.GameContext
-  _isAutoBuild: 1
+  _isAutoBuild: 0
   _injectSceneMonoBehaviour: 1
   _mapPrefab: {fileID: 3274618510344991606, guid: ce796fc72ac149b46865e5f745e3c723, type: 3}
   _unitCreator: {fileID: 1976277702}

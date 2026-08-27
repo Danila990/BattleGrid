@@ -28,7 +28,7 @@ namespace UnityServiceLocator
             }
         }
 
-        protected override abstract void Configurate(IServiceRegister builder);
+        protected override abstract void Configurate(IServiceRegister register);
 
         public void RegisterSceneRoot<TSceneRoot>() where TSceneRoot : MonoBehaviour, IRootContoller
         {
