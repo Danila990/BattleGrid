@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 407372525}
   - component: {fileID: 407372524}
+  - component: {fileID: 407372526}
   m_Layer: 0
   m_Name: WorldGrid
   m_TagString: Untagged
@@ -148,7 +149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4b0f12625f2e94d858bfdfe9accb12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyCode.WorldGrid
-  _gridSettings: {fileID: 11400000, guid: 0c7203a405b59ca40b4a6b17b5e0b126, type: 2}
 --- !u!4 &407372525
 Transform:
   m_ObjectHideFlags: 0
@@ -157,13 +157,30 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407372523}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1560341333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &407372526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407372523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4f60f954fbacf2468a5f956256d5c22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MyCode.WorldCellCreator
+  _gridSettings: {fileID: 11400000, guid: 3ab479f08cc034544a146a38eaf94fd9, type: 2}
+  _worldCellDatas:
+  - {fileID: 11400000, guid: a3a31d5653dabce4fb6233ca52ebd710, type: 2}
+  - {fileID: 11400000, guid: fe8d2f22d4f7e43459e30430758a7ccc, type: 2}
+  _worldGrid: {fileID: 407372524}
 --- !u!1 &992683910
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,7 +408,7 @@ GameObject:
   - component: {fileID: 1560341333}
   - component: {fileID: 1560341332}
   m_Layer: 0
-  m_Name: MainGameContext
+  m_Name: PoligonContext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -409,8 +426,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2900054e94f031c46bc763cb002f381f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleGridGame.MainGameContext
-  _isAutoBuild: 0
+  _isAutoBuild: 1
   _injectSceneMonoBehaviour: 1
+  _worldGrid: {fileID: 407372524}
+  _worldGridCreator: {fileID: 407372526}
 --- !u!4 &1560341333
 Transform:
   m_ObjectHideFlags: 0
@@ -423,7 +442,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 407372525}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1803049292
@@ -593,4 +613,3 @@ SceneRoots:
   m_Roots:
   - {fileID: 1803049293}
   - {fileID: 1560341333}
-  - {fileID: 407372525}

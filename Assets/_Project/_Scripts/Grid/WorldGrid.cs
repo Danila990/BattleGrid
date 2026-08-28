@@ -6,7 +6,7 @@ namespace BattleGridGame
 {
     public class WorldGrid : MonoBehaviour, IWorldGrid
     {
-        public MultiArray<Cell> MultiArray = new MultiArray<Cell>();
+        public MultiArray<Cell> MultiArray = new MultiArray<Cell>(5, 5);
         public Vector3 GridPositionOffset;
         public float CellSize = 1.2f;
         public Vector2Int GetSize() => MultiArray.Size;

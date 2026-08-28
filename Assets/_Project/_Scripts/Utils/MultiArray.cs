@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 [System.Serializable]
 public struct ArrayLine<T>
@@ -9,7 +8,7 @@ public struct ArrayLine<T>
 }
 
 [System.Serializable]
-public class MultiArray<T> where T : Object
+public class MultiArray<T>
 {
     [SerializeField] protected ArrayLine<T>[] _values;
 
@@ -17,6 +16,13 @@ public class MultiArray<T> where T : Object
     public int SizeY => _values[0].Values.Length;
 
     public Vector2Int Size => new Vector2Int(SizeX, SizeY);
+
+    public MultiArray(int sizeX, int sizeY)
+    {
+        _values = new ArrayLine<T>[sizeX];
+        for (int i = 0; i < sizeX; i++)
+            _values[i].Values = new T[sizeY];
+    }
 
     public void Set(ArrayLine<T>[] values) => _values = values;
 

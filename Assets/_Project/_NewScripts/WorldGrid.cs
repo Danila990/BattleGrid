@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace MyCode
 {
-
-    public class WorldGrid : MonoBehaviour//, IWorldGrid
+    public class WorldGrid : MonoBehaviour, IWorldGrid
     {
-        [SerializeField] private WorldGridSettings _gridSettings;
-
         private WorldCell[,] _worldCells;
         private Vector3 _gridPositionOffset;
         private float _cellSize = 1.2f;
@@ -17,11 +13,11 @@ namespace MyCode
         public int SizeZ => _worldCells.GetLength(1);
         public int SizeX => _worldCells.GetLength(0);
 
-        public void CreateGrid()
+        public void SetupGrid(WorldCell[,] worldCells, Vector3 gridPositionOffset, float cellSize)
         {
-            _gridPositionOffset = _gridSettings.MiddleOffest();
-            _cellSize = _gridSettings.CellSize;
-
+            _worldCells = worldCells;
+            _gridPositionOffset = gridPositionOffset;
+            _cellSize = cellSize;
         }
 
         public IWorldCell GetCellAndNear(int x, int z, out IWorldCell[] near, int range = 1)
@@ -124,24 +120,6 @@ namespace MyCode
         {
             x = Mathf.FloorToInt((worldPos.x + _gridPositionOffset.x) / _cellSize + _cellSize / 2);
             z = Mathf.FloorToInt((worldPos.z + _gridPositionOffset.z) / _cellSize + _cellSize / 2);
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (_gridSettings == null)  return;
-
-            Vector3 middleOffset = _gridSettings.MiddleOffest();
-            float zStart = -_gridSettings.CellSize / 2;
-            float zEnd = (_gridSettings.CellSize / 3) + _gridSettings.CellSize * _gridSettings.SizeZ - 1;
-
-            float xStart = -_gridSettings.CellSize / 2;
-            float xEnd = (_gridSettings.CellSize / 3) + _gridSettings.CellSize * _gridSettings.SizeX - 1;
-
-            for (int x = 0; x < _gridSettings.SizeX + 1; x++)
-                Gizmos.DrawLine(new Vector3(x * _gridSettings.CellSize + xStart, 0, zStart) - middleOffset, new Vector3(x * _gridSettings.CellSize + xStart, 0, zEnd) - middleOffset);
-
-            for (int z = 0; z < _gridSettings.SizeZ + 1; z++)
-                Gizmos.DrawLine(new Vector3(xStart, 0, z * _gridSettings.CellSize + zStart) - middleOffset, new Vector3(xEnd, 0, z * _gridSettings.CellSize + zStart) - middleOffset);
         }
     }
 }
