@@ -6,6 +6,7 @@ namespace MyCode
     {
         public int X { get; set; }
         public int Z { get; set; }
+        public WordCellType CellType { get; set; }
         public TeamType Team { get; private set; } = TeamType.None;
 
         public Vector3 MovePos => transform.position;

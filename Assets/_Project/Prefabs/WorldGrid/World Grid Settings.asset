@@ -13,20 +13,31 @@ MonoBehaviour:
   m_Name: World Grid Settings
   m_EditorClassIdentifier: Assembly-CSharp::MyCode.WorldGridSettings
   CellSize: 1.2
-  SizeX: 5
-  SizeZ: 5
+  SizeX: 7
+  SizeZ: 7
   Grid:
     _values:
     - Values:
+      - WordCellType: 4
+        Team: 0
+      - WordCellType: 0
+        Team: 0
+      - WordCellType: 0
+        Team: 1
+      - WordCellType: 0
+        Team: 0
+      - WordCellType: 1
+        Team: 0
+    - Values:
       - WordCellType: 0
         Team: 0
       - WordCellType: 0
         Team: 0
       - WordCellType: 0
-        Team: 0
+        Team: 1
       - WordCellType: 0
         Team: 0
-      - WordCellType: 0
+      - WordCellType: 1
         Team: 0
     - Values:
       - WordCellType: 0
@@ -36,7 +47,18 @@ MonoBehaviour:
       - WordCellType: 0
         Team: 0
       - WordCellType: 0
+        Team: 1
+      - WordCellType: 0
+        Team: 1
+    - Values:
+      - WordCellType: 0
         Team: 0
+      - WordCellType: 0
+        Team: 0
+      - WordCellType: 0
+        Team: 0
+      - WordCellType: 0
+        Team: 1
       - WordCellType: 0
         Team: 0
     - Values:

@@ -37,7 +37,7 @@ namespace BattleGridGame.GridEditor
 
         private void OnGUI()
         {
-            GridEditorExtension.CustomPropetry(this, "_gridCreator");
+            EditorExtension.CustomPropetry(this, "_gridCreator");
 
             EditorGUILayout.Space(10);
 
@@ -66,7 +66,7 @@ namespace BattleGridGame.GridEditor
                 ResetTypes();
             EditorGUILayout.EndHorizontal();
 
-            GridEditorExtension.MidlleText("GridMap", 15, 5);
+            EditorExtension.MidlleText("GridMap", 15, 5);
             DrawPreviewGrid();
             UpdateSizeWindow();
         }
@@ -195,9 +195,9 @@ namespace BattleGridGame.GridEditor
             Color originalBackgroundColor = GUI.backgroundColor;
             GUI.backgroundColor = color;
 
-            Handles.BeginGUI();
+            //Handles.BeginGUI();
             EditorGUI.LabelField(textRect, text, GetLabelStyle());
-            Handles.EndGUI();
+            //Handles.EndGUI();
 
             GUI.backgroundColor = originalBackgroundColor;
         }

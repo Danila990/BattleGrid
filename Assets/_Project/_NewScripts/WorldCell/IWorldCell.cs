@@ -9,6 +9,7 @@ namespace MyCode
         public Vector3 MovePos { get; }
         public bool IsLocked { get; }
         public TeamType Team { get; }
+        public WordCellType CellType { get; }
 
         public void SetTeam(TeamType team);
     }

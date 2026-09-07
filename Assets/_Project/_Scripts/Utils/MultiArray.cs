@@ -31,7 +31,7 @@ public class MultiArray<T>
         _values[x].Values[y] = newValue; 
     }
 
-    public ArrayLine<T>[] GetAll() => _values;
+    public ref ArrayLine<T>[] GetAll() => ref _values;
 
     public T Get(int x, int y)
     {

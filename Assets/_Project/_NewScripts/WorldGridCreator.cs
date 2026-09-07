@@ -24,12 +24,12 @@ namespace MyCode
             var gridParrent = new GameObject("Grid").transform;
             gridParrent.SetParent(transform);
 
-            WorldCell[,] worldCells = new WorldCell[_gridSettings.SizeX, _gridSettings.SizeZ];
-            for (int x = 0; x < _gridSettings.SizeX; x++)
+            WorldCell[,] worldCells = new WorldCell[_gridSettings.Grid.SizeX, _gridSettings.Grid.SizeY];
+            for (int x = 0; x < _gridSettings.Grid.SizeX; x++)
             {
                 var parrentLine = new GameObject("Line " + x).transform;
                 parrentLine.SetParent(gridParrent.transform);
-                for (int z = 0; z < _gridSettings.SizeZ; z++)
+                for (int z = 0; z < _gridSettings.Grid.SizeY; z++)
                 {
                     var cellInfo = _gridSettings.Grid.Get(x, z);
                     var worldCell = CreateWorldCell(cellInfo.WordCellType, cellInfo.Team);
@@ -37,6 +37,7 @@ namespace MyCode
                     worldCell.transform.position = new Vector3(x * cellSize, 0, z * cellSize) - middleOffset;
                     worldCell.X = x;
                     worldCell.Z = z;
+                    worldCell.CellType = cellInfo.WordCellType;
                     worldCell.name = $"{x}, {z}";
                     worldCells[x, z] = worldCell;
                 }
@@ -63,15 +64,15 @@ namespace MyCode
 
             Vector3 middleOffset = _gridSettings.MiddleOffest();
             float zStart = -_gridSettings.CellSize / 2;
-            float zEnd = (_gridSettings.CellSize / 3) + _gridSettings.CellSize * _gridSettings.SizeZ - 1;
+            float zEnd = (_gridSettings.CellSize / 3) + _gridSettings.CellSize * _gridSettings.Grid.SizeY - 1;
 
             float xStart = -_gridSettings.CellSize / 2;
-            float xEnd = (_gridSettings.CellSize / 3) + _gridSettings.CellSize * _gridSettings.SizeX - 1;
+            float xEnd = (_gridSettings.CellSize / 3) + _gridSettings.CellSize * _gridSettings.Grid.SizeX - 1;
 
-            for (int x = 0; x < _gridSettings.SizeX + 1; x++)
+            for (int x = 0; x < _gridSettings.Grid.SizeX + 1; x++)
                 Gizmos.DrawLine(new Vector3(x * _gridSettings.CellSize + xStart, 0, zStart) - middleOffset, new Vector3(x * _gridSettings.CellSize + xStart, 0, zEnd) - middleOffset);
 
-            for (int z = 0; z < _gridSettings.SizeZ + 1; z++)
+            for (int z = 0; z < _gridSettings.Grid.SizeY + 1; z++)
                 Gizmos.DrawLine(new Vector3(xStart, 0, z * _gridSettings.CellSize + zStart) - middleOffset, new Vector3(xEnd, 0, z * _gridSettings.CellSize + zStart) - middleOffset);
         }
     }

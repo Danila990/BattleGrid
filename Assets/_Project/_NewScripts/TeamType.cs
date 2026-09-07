@@ -4,7 +4,6 @@ namespace MyCode
     {
         None = 0,
         Player = 1,
-        AI_1 = 2,
-        AI_2 = 3,
+        Enemy = 2,
     }
 }
